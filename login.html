@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — MEDICURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="auth-wrap">
+  <div class="auth-orb auth-orb1"></div>
+  <div class="auth-orb auth-orb2"></div>
+  <div class="auth-box">
+    <div class="auth-logo">🏥 MEDICURE</div>
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-sub">Sign in to your account</p>
+    <div class="role-toggle">
+      <button class="role-btn active" id="login-patient-btn" onclick="window.setLoginRole('patient')">👤 Patient</button>
+      <button class="role-btn" id="login-doctor-btn" onclick="window.setLoginRole('doctor')">👨‍⚕️ Doctor</button>
+    </div>
+    <div class="auth-error" id="login-error"></div>
+    <div class="form-group"><label>Email</label><input class="form-input" type="email" id="login-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')window.doLogin()"></div>
+    <div class="form-group"><label>Password</label><input class="form-input" type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')window.doLogin()"></div>
+    <button class="auth-btn" onclick="window.doLogin()">Sign In →</button>
+    <div class="auth-switch" style="margin-top:.8rem;">No account? <a href="register.html">Register free</a></div>
+    <div class="auth-switch" style="margin-top:.4rem;"><a href="index.html">← Back to Home</a></div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

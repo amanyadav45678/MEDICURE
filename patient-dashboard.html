@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Dashboard — MEDICURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/dashboards.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- APPOINTMENT MODAL -->
+<div class="appt-modal-overlay" id="appt-modal">
+  <div class="appt-modal">
+    <h3>📅 Book Appointment</h3>
+    <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;" id="appt-doc-name">Select a time slot</p>
+    <div class="form-group"><label>Select Date</label><input class="form-input" type="date" id="appt-date" min=""></div>
+    <div class="form-group"><label>Available Slots</label>
+      <div class="appt-slots">
+        <button class="slot-btn active" onclick="window.selectSlot(this)">9:00 AM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">9:30 AM</button>
+        <button class="slot-btn booked">10:00 AM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">10:30 AM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">11:00 AM</button>
+        <button class="slot-btn booked">11:30 AM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">2:00 PM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">2:30 PM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">3:00 PM</button>
+        <button class="slot-btn booked">3:30 PM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">4:00 PM</button>
+        <button class="slot-btn" onclick="window.selectSlot(this)">4:30 PM</button>
+      </div>
+    </div>
+    <div class="form-group"><label>Reason for visit</label><textarea class="form-input" id="appt-reason" rows="2" placeholder="Brief reason..."></textarea></div>
+    <div style="display:flex;gap:.8rem;margin-top:.5rem;">
+      <button class="btn btn-primary" style="flex:1" onclick="window.confirmAppointment()">✅ Confirm Booking</button>
+      <button class="btn btn-outline" onclick="window.closeApptModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="logo">🏥 MEDICURE <span class="logo-badge">AI</span></a>
+  <div class="user-info">
+    <div class="avatar" id="patient-avatar">P</div>
+    <span id="patient-name-nav" style="font-weight:600;">Patient</span>
+    <button class="nav-btn" onclick="window.doLogout()">Logout</button>
+  </div>
+</nav>
+
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-section-label">Main</div>
+    <div class="sidebar-item active" id="sb-home" onclick="window.showSection('section-home')"><span class="icon">🏠</span> Home</div>
+    <div class="sidebar-item" id="sb-aria" onclick="window.showSection('section-aria')"><span class="icon">🩺</span> Talk to ARIA</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Healthcare</div>
+    <div class="sidebar-item" id="sb-medicines" onclick="window.showSection('section-medicines')"><span class="icon">💊</span> Medicines</div>
+    <div class="sidebar-item" id="sb-doctors" onclick="window.showSection('section-doctors')"><span class="icon">👨‍⚕️</span> Find Doctors</div>
+    <div class="sidebar-item" id="sb-appointments" onclick="window.showSection('section-appointments')"><span class="icon">📅</span> Appointments</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Records</div>
+    <div class="sidebar-item" id="sb-history" onclick="window.showSection('section-history')"><span class="icon">📋</span> My History</div>
+    <div class="sidebar-item" id="sb-reports" onclick="window.showSection('section-reports')"><span class="icon">📊</span> AI Reports</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-item" onclick="window.doLogout()"><span class="icon">🚪</span> Logout</div>
+  </div>
+  
+  <div class="dash-content">
+    <!-- HOME -->
+    <div id="section-home">
+      <div class="dash-greeting">
+        <h2>Good day, <span id="patient-greeting-name">there</span> 👋</h2>
+        <p id="patient-greeting-sub">Here's your health overview for today</p>
+      </div>
+      <div class="quick-cards">
+        <div class="quick-card" onclick="window.showSection('section-aria')"><div class="q-icon">🩺</div><div class="q-title">Talk to ARIA</div><div class="q-sub">Describe your symptoms</div></div>
+        <div class="quick-card" onclick="window.showSection('section-medicines')"><div class="q-icon">💊</div><div class="q-title">Medicine Info</div><div class="q-sub">Search any medicine</div></div>
+        <div class="quick-card" onclick="window.showSection('section-doctors')"><div class="q-icon">📍</div><div class="q-title">Find Doctors</div><div class="q-sub">Nearest doctors</div></div>
+        <div class="quick-card" onclick="window.showSection('section-appointments')"><div class="q-icon">📅</div><div class="q-title">Appointments</div><div class="q-sub">Book & manage</div></div>
+        <div class="quick-card" onclick="window.showSection('section-reports')"><div class="q-icon">📊</div><div class="q-title">AI Reports</div><div class="q-sub">Health insights</div></div>
+        <div class="quick-card" onclick="window.showSection('section-history')"><div class="q-icon">📋</div><div class="q-title">My History</div><div class="q-sub">Past consultations</div></div>
+      </div>
+      <div class="section-card" style="background:linear-gradient(135deg,#e8f8f2,#f0fdf9);border-color:var(--green);">
+        <h3>💡 Daily Health Tip from ARIA</h3>
+        <div id="daily-tip" style="color:var(--text-muted);font-size:.9rem;line-height:1.75;">Loading tip...</div>
+      </div>
+      <div class="section-card">
+        <h3>🌟 Popular Medicines</h3>
+        <div class="med-grid-home" id="home-med-grid"></div>
+      </div>
+    </div>
+
+    <!-- ARIA -->
+    <div id="section-aria" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">Talk to ARIA 🩺</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;">Describe your symptoms. ARIA will prepare a complete report for your doctor.</p>
+      <div class="chat-wrap">
+        <div class="chat-header">
+          <div class="ch-avatar">🩺</div>
+          <div>
+            <div class="ch-name">ARIA — AI Intake Agent</div>
+            <div class="ch-status">● Online — Hindi + English supported</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="aria-messages">
+          <div class="msg bot">
+            <div class="msg-bubble">Namaste! 🙏 I'm ARIA, your AI health intake agent. I'm here to help collect your symptoms and prepare a detailed report for your doctor.<br><br>Please tell me — what brings you here today? Describe how you're feeling in your own words. (Hindi ya English, koi bhi language use kar sakte hain)</div>
+            <div class="msg-time">Just now</div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input class="chat-input" id="aria-input" type="text" placeholder="Type your symptoms... (Hindi or English)" onkeydown="if(event.key==='Enter')window.sendARIA()">
+          <button class="chat-send-btn" onclick="window.sendARIA()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEDICINES -->
+    <div id="section-medicines" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">💊 Medicine Information</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">AI-powered medicine info — dosage, uses, side effects & precautions.</p>
+      <div class="medicine-search-bar">
+        <input type="text" id="med-input" placeholder="Search medicine... e.g. Paracetamol, Metformin, Amlodipine" onkeydown="if(event.key==='Enter')window.searchMedicine()">
+        <button onclick="window.searchMedicine()">Search 🔍</button>
+      </div>
+      <div id="med-results"></div>
+      <div class="section-card">
+        <h3>🌟 Quick Search</h3>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+          <button class="filter-btn active" onclick="window.quickMed('Paracetamol')">Paracetamol</button>
+          <button class="filter-btn" onclick="window.quickMed('Metformin')">Metformin</button>
+          <button class="filter-btn" onclick="window.quickMed('Amlodipine')">Amlodipine</button>
+          <button class="filter-btn" onclick="window.quickMed('Omeprazole')">Omeprazole</button>
+          <button class="filter-btn" onclick="window.quickMed('Aspirin')">Aspirin</button>
+          <button class="filter-btn" onclick="window.quickMed('Cetirizine')">Cetirizine</button>
+          <button class="filter-btn" onclick="window.quickMed('Azithromycin')">Azithromycin</button>
+          <button class="filter-btn" onclick="window.quickMed('Atorvastatin')">Atorvastatin</button>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3>💊 All Medicines Library</h3>
+        <div class="med-grid-home" id="patient-med-grid"></div>
+      </div>
+    </div>
+
+    <!-- DOCTORS -->
+    <div id="section-doctors" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📍 Find Nearest Doctors</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;">Highly rated doctors near your location.</p>
+      <div style="display:flex;gap:.8rem;margin-bottom:1.5rem;align-items:center;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" onclick="window.getLocation()">📍 Use My Location</button>
+        <span id="location-status" style="font-size:.82rem;color:var(--text-muted);">Location not set</span>
+      </div>
+      <div class="doctor-filters">
+        <button class="filter-btn active" onclick="window.filterDocs('All')">All</button>
+        <button class="filter-btn" onclick="window.filterDocs('General Physician')">General Physician</button>
+        <button class="filter-btn" onclick="window.filterDocs('Cardiologist')">Cardiologist</button>
+        <button class="filter-btn" onclick="window.filterDocs('Dermatologist')">Dermatologist</button>
+        <button class="filter-btn" onclick="window.filterDocs('Orthopedic')">Orthopedic</button>
+        <button class="filter-btn" onclick="window.filterDocs('Pediatrician')">Pediatrician</button>
+        <button class="filter-btn" onclick="window.filterDocs('Gynecologist')">Gynecologist</button>
+      </div>
+      <div class="doctors-grid" id="doctors-grid"></div>
+    </div>
+
+    <!-- APPOINTMENTS -->
+    <div id="section-appointments" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📅 My Appointments</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Manage your upcoming and past appointments.</p>
+      <div id="appointments-list"></div>
+      <div class="section-card" style="margin-top:1rem;">
+        <h3>🔍 Book New Appointment</h3>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">Go to Find Doctors to book an appointment with any available doctor.</p>
+        <button class="btn btn-primary btn-sm" onclick="window.showSection('section-doctors')">Browse Doctors →</button>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="section-history" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem;font-weight:900;">📋 My Medical History</h2>
+      <div id="patient-history-list"></div>
+    </div>
+
+    <!-- AI REPORTS -->
+    <div id="section-reports" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📊 AI Health Reports</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Generate a comprehensive AI health analysis based on your history.</p>
+      <div class="section-card">
+        <h3>🤖 Generate Health Report</h3>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">Describe your current health concerns and get an AI-powered comprehensive report.</p>
+        <div class="form-group"><label>Current Health Concerns</label><textarea class="form-input" id="report-concerns" rows="3" placeholder="e.g. I have been having headaches for 2 weeks, mild fever, and fatigue. I also have diabetes type 2 and hypertension..."></textarea></div>
+        <div class="form-group"><label>Known Conditions (optional)</label><input class="form-input" id="report-conditions" placeholder="e.g. Diabetes, Hypertension, Asthma"></div>
+        <div class="form-group"><label>Current Medications (optional)</label><input class="form-input" id="report-medications" placeholder="e.g. Metformin 500mg, Amlodipine 5mg"></div>
+        <button class="btn btn-primary" onclick="window.generateHealthReport()" id="report-btn">🤖 Generate AI Health Report</button>
+      </div>
+      <div id="report-output"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

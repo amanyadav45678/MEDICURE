@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDICURE — AI Healthcare Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="page active" id="page-landing">
+  <nav>
+    <a href="index.html" class="logo">🏥 MEDICURE <span class="logo-badge">AI</span></a>
+    <div class="nav-links">
+      <a href="#agents-section" class="nav-btn">Features</a>
+      <a href="#medicines-section" class="nav-btn">Medicines</a>
+      <a href="#appointment-section" class="nav-btn">Appointments</a>
+      <a href="login.html" class="nav-btn">Login</a>
+      <a href="register.html" class="nav-btn primary">Get Started →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">✨ Powered by AI &nbsp;•&nbsp; Trusted by 50,000+ Patients</div>
+        <h1>Healthcare that puts<br><em>you</em> first, always</h1>
+        <p>Three specialized AI agents — ARIA, DARA, and NOVA — working together to make every doctor visit smarter, faster, and more accurate. From symptoms to SOAP notes in seconds.</p>
+        <div class="hero-btns">
+          <a href="register.html" class="btn btn-primary">Start Free — No Card Needed</a>
+          <button class="btn btn-outline" onclick="window.demoMode()">🎬 Live Demo</button>
+        </div>
+        <div style="margin-top:2rem;display:flex;gap:2rem;">
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">4.9★</strong><br>Patient Rating</div>
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">50K+</strong><br>Consultations</div>
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">2.5h</strong><br>Saved/Day</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card hc1">
+          <div class="hc-label"><span class="pulse-dot"></span>ARIA Live</div>
+          <div class="hc-val">🩺 Intake</div>
+          <div class="hc-sub">Collecting symptoms in Hindi & English</div>
+        </div>
+        <div class="hero-card hc2">
+          <div class="hc-label">🧠 DARA Analysis</div>
+          <div class="hc-val">94%</div>
+          <div class="hc-sub">Diagnosis accuracy boost</div>
+        </div>
+        <div class="hero-card hc3">
+          <div class="hc-label">🎙️ NOVA Today</div>
+          <div style="display:flex;gap:.5rem;align-items:center;margin:.3rem 0;">
+            <div style="font-size:1.3rem;font-weight:800;color:var(--green);font-family:'Playfair Display',serif;">12</div>
+            <div style="font-size:.75rem;color:var(--text-muted);">SOAP notes generated</div>
+          </div>
+          <div style="font-size:.75rem;color:var(--text-muted);">2.5 hours saved for Dr. Sharma</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num">35%</div><div class="stat-label">Doctor time lost to paperwork</div></div>
+      <div class="stat-item"><div class="stat-num">50%</div><div class="stat-label">Higher AI misdiagnosis in women</div></div>
+      <div class="stat-item"><div class="stat-num">2.5h</div><div class="stat-label">Saved per doctor per day</div></div>
+      <div class="stat-item"><div class="stat-num">₹4.2L</div><div class="stat-label">Avg cost of misdiagnosis in India</div></div>
+    </div>
+  </div>
+
+  <!-- AI AGENTS -->
+  <div class="section" id="agents-section">
+    <div style="text-align:center;">
+      <div class="section-tag">🤖 Three AI Agents</div>
+      <h2 class="section-title" style="text-align:center;">Meet the MEDICURE Team</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">Each agent specializes in a different phase of your healthcare journey — together they create a seamless, intelligent experience.</p>
+    </div>
+    <div class="agents-grid">
+      <a href="register.html" class="agent-card aria">
+        <div class="agent-icon">🩺</div>
+        <div class="agent-name">ARIA</div>
+        <div class="agent-full">Automated Reception & Intake Agent</div>
+        <div class="agent-desc">Talks to patients like a caring nurse — collects symptoms, pulls history, and flags AI bias before the doctor walks in. Supports Hindi + English + Voice.</div>
+        <div class="agent-tag">Hindi + English + Voice</div>
+      </a>
+      <a href="register.html" class="agent-card dara">
+        <div class="agent-icon">🧠</div>
+        <div class="agent-name">DARA</div>
+        <div class="agent-full">Doctor Advisory & Response Agent</div>
+        <div class="agent-desc">Reads 5 years of patient history in 2 minutes. Finds patterns, missed diagnoses, and treatment gaps that no single doctor could catch manually.</div>
+        <div class="agent-tag">ChronicIQ Engine</div>
+      </a>
+      <a href="register.html" class="agent-card nova">
+        <div class="agent-icon">🎙️</div>
+        <div class="agent-name">NOVA</div>
+        <div class="agent-full">Note & Voice Auto-documentation Agent</div>
+        <div class="agent-desc">Doctor speaks for 60 seconds. NOVA generates a complete SOAP note automatically. 2–3 hours saved every single day per doctor.</div>
+        <div class="agent-tag">Voice → SOAP in 10s</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MEDICINES SHOWCASE -->
+  <div class="medicines-showcase" id="medicines-section">
+    <div class="med-showcase-inner">
+      <div class="section-tag">💊 Medicine Database</div>
+      <h2 class="section-title">30+ Medicines at a Glance</h2>
+      <p class="section-sub">Instantly access dosage, side effects, interactions & precautions for any medicine — powered by AI.</p>
+      <div class="medicines-marquee-wrap">
+        <div class="medicines-track" id="med-track-1"></div>
+      </div>
+      <div class="medicines-marquee-wrap" style="margin-top:1rem;">
+        <div class="medicines-track medicines-track2" id="med-track-2"></div>
+      </div>
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="register.html" class="btn btn-primary">Search Any Medicine →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPOINTMENT SECTION -->
+  <div class="appointment-section" id="appointment-section">
+    <div class="appt-inner">
+      <div>
+        <div class="section-tag">📅 Smart Booking</div>
+        <h2 class="section-title">Book Appointments<br>Instantly</h2>
+        <p class="section-sub">No waiting on hold. No paperwork. Just tap, pick a slot, and you're booked. ARIA will prep your doctor before you even arrive.</p>
+        <div class="appt-steps" style="margin-top:2rem;">
+          <div class="appt-step">
+            <div class="appt-step-num">1</div>
+            <div class="appt-step-text"><h4>Chat with ARIA</h4><p>Describe your symptoms in Hindi or English. ARIA collects your intake report.</p></div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">2</div>
+            <div class="appt-step-text"><h4>Pick a Doctor & Slot</h4><p>Browse nearby doctors filtered by specialty, rating, and availability.</p></div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">3</div>
+            <div class="appt-step-text"><h4>Doctor is Ready</h4><p>DARA analyses your history before the appointment. Your doctor walks in prepared.</p></div>
+          </div>
+        </div>
+        <a href="register.html" class="btn btn-primary" style="margin-top:2rem;">Book My Appointment →</a>
+      </div>
+      <div class="appt-form-card">
+        <h3 style="font-family:'Playfair Display',serif;font-weight:900;margin-bottom:1.2rem;">Quick Appointment</h3>
+        <div class="form-group"><label>Your Name</label><input class="form-input" placeholder="Full name" id="landing-appt-name"></div>
+        <div class="form-group"><label>Speciality Needed</label>
+          <select class="form-input" id="landing-appt-spec">
+            <option>General Physician</option><option>Cardiologist</option><option>Dermatologist</option>
+            <option>Orthopedic</option><option>Pediatrician</option><option>Gynecologist</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Preferred Date</label><input class="form-input" type="date" id="landing-appt-date"></div>
+        <div class="form-group"><label>Brief Complaint</label><textarea class="form-input" rows="2" placeholder="What brings you in?" id="landing-appt-complaint"></textarea></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:.5rem;" onclick="window.landingBookAppt()">Request Appointment ✅</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="landing-footer">
+    <div class="logo" style="justify-content:center;margin-bottom:.8rem;filter:invert(1) brightness(2);">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+    <p>Transforming healthcare with AI · India's most trusted medical AI platform</p>
+    <p style="margin-top:.5rem;">© 2026 MEDICURE</p>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

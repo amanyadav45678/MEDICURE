@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDICURE — AI Healthcare Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #0d6e4f;
+  --green2: #15a474;
+  --green3: #1fd99a;
+  --green-pale: #e6f7f2;
+  --green-pale2: #c8f0e3;
+  --white: #ffffff;
+  --bg: #f5fbf8;
+  --text: #0d1f18;
+  --text-muted: #527563;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --blue: #2563eb;
+  --border: #c9e8dc;
+  --card: #ffffff;
+  --shadow: 0 4px 28px rgba(13,110,79,0.10);
+  --shadow2: 0 8px 40px rgba(13,110,79,0.18);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--green2);border-radius:3px;}
+
+/* ── NAV ── */
+nav{background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:68px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(13,110,79,0.07);}
+.logo{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--green);display:flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:900;}
+.logo-badge{font-size:.72rem;font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.3px;}
+.nav-links{display:flex;align-items:center;gap:.8rem;}
+.nav-btn{background:none;border:none;font-family:inherit;font-size:.88rem;color:var(--text-muted);cursor:pointer;padding:.45rem .9rem;border-radius:9px;transition:.2s;font-weight:500;}
+.nav-btn:hover{background:var(--green-pale);color:var(--green);}
+.nav-btn.primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;padding:.5rem 1.4rem;font-weight:700;border-radius:10px;box-shadow:0 4px 16px rgba(13,110,79,0.25);}
+.nav-btn.primary:hover{box-shadow:0 6px 22px rgba(13,110,79,0.35);transform:translateY(-1px);}
+.user-info{display:flex;align-items:center;gap:.7rem;font-size:.85rem;color:var(--text-muted);}
+.avatar{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85rem;}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;padding:5rem 2.5rem 3rem;min-height:88vh;display:flex;align-items:center;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#e8f8f2 0%,#f5fbf8 45%,#eef6ff 100%);z-index:0;}
+.hero-orb1{position:absolute;top:-120px;right:-120px;width:500px;height:500px;background:radial-gradient(circle,rgba(21,164,116,0.18),transparent 70%);border-radius:50%;z-index:0;}
+.hero-orb2{position:absolute;bottom:-80px;left:-80px;width:380px;height:380px;background:radial-gradient(circle,rgba(37,99,235,0.10),transparent 70%);border-radius:50%;z-index:0;}
+.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.hero-left{}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(13,110,79,.10),rgba(21,164,116,.10));color:var(--green);border:1.5px solid rgba(13,110,79,.20);padding:.4rem 1.1rem;border-radius:30px;font-size:.8rem;font-weight:700;margin-bottom:1.8rem;letter-spacing:.3px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4vw,4rem);color:var(--text);line-height:1.12;margin-bottom:1.2rem;font-weight:900;}
+.hero h1 em{color:var(--green);font-style:normal;position:relative;}
+.hero h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green2));border-radius:2px;}
+.hero p{font-size:1.05rem;color:var(--text-muted);max-width:480px;line-height:1.75;margin-bottom:2rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{padding:.8rem 1.9rem;border-radius:12px;border:none;font-family:inherit;font-size:.93rem;font-weight:700;cursor:pointer;transition:.2s;letter-spacing:.2px;}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 6px 20px rgba(13,110,79,0.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(13,110,79,0.38);}
+.btn-outline{background:#fff;color:var(--green);border:2px solid var(--green);}
+.btn-outline:hover{background:var(--green-pale);}
+.btn-sm{padding:.5rem 1.2rem;font-size:.83rem;border-radius:10px;}
+.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;}
+
+/* HERO RIGHT - floating cards */
+.hero-visual{position:relative;height:420px;}
+.hero-card{position:absolute;background:#fff;border-radius:var(--radius);padding:1.1rem 1.4rem;box-shadow:var(--shadow2);border:1px solid var(--border);}
+.hc1{top:0;right:0;width:230px;animation:float1 4s ease-in-out infinite;}
+.hc2{top:130px;left:0;width:210px;animation:float2 4s ease-in-out infinite 1s;}
+.hc3{bottom:20px;right:20px;width:240px;animation:float1 4s ease-in-out infinite .5s;}
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hc-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:.5rem;}
+.hc-val{font-size:1.3rem;font-weight:800;color:var(--green);font-family:'Playfair Display',serif;}
+.hc-sub{font-size:.75rem;color:var(--text-muted);margin-top:.2rem;}
+.pulse-dot{display:inline-block;width:8px;height:8px;background:var(--green2);border-radius:50%;margin-right:.4rem;animation:pulse-anim 1.5s ease-in-out infinite;}
+@keyframes pulse-anim{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+
+/* ── STATS STRIP ── */
+.stats-strip{background:linear-gradient(135deg,var(--green),var(--green2));padding:2.5rem 2.5rem;margin:0;}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+.stat-item{text-align:center;color:#fff;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;line-height:1;}
+.stat-label{font-size:.78rem;opacity:.85;margin-top:.4rem;font-weight:500;letter-spacing:.2px;}
+
+/* ── SECTIONS ── */
+.section{padding:4rem 2.5rem;max-width:1200px;margin:0 auto;}
+.section-tag{display:inline-block;background:var(--green-pale);color:var(--green);font-size:.75rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;margin-bottom:1rem;letter-spacing:.4px;text-transform:uppercase;}
+.section-title{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--text);margin-bottom:.6rem;font-weight:900;line-height:1.2;}
+.section-sub{color:var(--text-muted);font-size:.95rem;line-height:1.7;max-width:540px;}
+
+/* ── AGENTS GRID ── */
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.agent-card{background:#fff;border-radius:var(--radius);padding:2rem;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:.25s;position:relative;overflow:hidden;}
+.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;}
+.agent-card.aria::before{background:linear-gradient(90deg,#0d6e4f,#15a474);}
+.agent-card.dara::before{background:linear-gradient(90deg,#2563eb,#7c3aed);}
+.agent-card.nova::before{background:linear-gradient(90deg,#f59e0b,#ef4444);}
+.agent-card:hover{transform:translateY(-5px);box-shadow:var(--shadow2);}
+.agent-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem;}
+.agent-card.aria .agent-icon{background:linear-gradient(135deg,#e6f7f2,#c8f0e3);}
+.agent-card.dara .agent-icon{background:linear-gradient(135deg,#eff6ff,#dbeafe);}
+.agent-card.nova .agent-icon{background:linear-gradient(135deg,#fff7ed,#fed7aa);}
+.agent-name{font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:.25rem;font-family:'Playfair Display',serif;}
+.agent-full{font-size:.75rem;color:var(--text-muted);margin-bottom:.9rem;font-weight:600;letter-spacing:.2px;}
+.agent-desc{font-size:.88rem;color:var(--text-muted);line-height:1.65;}
+.agent-tag{display:inline-block;margin-top:1rem;font-size:.73rem;background:var(--green-pale);color:var(--green);padding:.25rem .8rem;border-radius:20px;font-weight:700;}
+
+/* ── MEDICINES SHOWCASE ── */
+.medicines-showcase{background:linear-gradient(135deg,#f0fdf9,#f5fbf8);padding:4rem 2.5rem;}
+.med-showcase-inner{max-width:1200px;margin:0 auto;}
+.medicines-marquee-wrap{overflow:hidden;margin-top:2.5rem;position:relative;}
+.medicines-marquee-wrap::before,.medicines-marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;}
+.medicines-marquee-wrap::before{left:0;background:linear-gradient(90deg,#f0fdf9,transparent);}
+.medicines-marquee-wrap::after{right:0;background:linear-gradient(270deg,#f0fdf9,transparent);}
+.medicines-track{display:flex;gap:1rem;animation:scroll-left 35s linear infinite;width:max-content;}
+.medicines-track:hover{animation-play-state:paused;}
+.med-pill-card{background:#fff;border-radius:var(--radius);padding:1rem 1.3rem;border:1px solid var(--border);box-shadow:var(--shadow);min-width:160px;text-align:center;cursor:pointer;transition:.2s;flex-shrink:0;}
+.med-pill-card:hover{border-color:var(--green);transform:translateY(-3px);}
+.med-pill-img{font-size:2.5rem;margin-bottom:.6rem;display:block;}
+.med-pill-name{font-size:.83rem;font-weight:700;color:var(--text);}
+.med-pill-cat{font-size:.7rem;color:var(--text-muted);margin-top:.2rem;}
+@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.medicines-track2{animation:scroll-right 40s linear infinite;}
+@keyframes scroll-right{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+
+/* ── APPOINTMENT SECTION ── */
+.appointment-section{padding:4rem 2.5rem;background:#fff;}
+.appt-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.appt-form-card{background:var(--bg);border-radius:var(--radius);padding:2rem;border:1px solid var(--border);}
+.appt-steps{display:flex;flex-direction:column;gap:1.2rem;}
+.appt-step{display:flex;align-items:flex-start;gap:1rem;}
+.appt-step-num{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.85rem;flex-shrink:0;}
+.appt-step-text h4{font-weight:700;font-size:.92rem;margin-bottom:.2rem;}
+.appt-step-text p{font-size:.8rem;color:var(--text-muted);line-height:1.5;}
+
+/* ── AUTH ── */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f8f2 0%,#f5fbf8 50%,#eef6ff 100%);position:relative;overflow:hidden;}
+.auth-orb{position:absolute;border-radius:50%;}
+.auth-orb1{width:400px;height:400px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(21,164,116,0.15),transparent 70%);}
+.auth-orb2{width:300px;height:300px;bottom:-80px;left:-80px;background:radial-gradient(circle,rgba(37,99,235,0.10),transparent 70%);}
+.auth-box{background:#fff;border-radius:24px;padding:2.5rem;width:100%;max-width:450px;box-shadow:0 20px 60px rgba(13,110,79,0.15);position:relative;z-index:1;}
+.auth-logo{text-align:center;margin-bottom:1.8rem;font-family:'Playfair Display',serif;font-size:2.1rem;color:var(--green);font-weight:900;}
+.auth-title{font-size:1.45rem;font-weight:800;margin-bottom:.3rem;color:var(--text);}
+.auth-sub{font-size:.87rem;color:var(--text-muted);margin-bottom:1.5rem;}
+.role-toggle{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.5rem;}
+.role-btn{padding:.75rem;border-radius:11px;border:2px solid var(--border);background:#fff;font-family:inherit;font-size:.87rem;font-weight:700;cursor:pointer;transition:.2s;color:var(--text-muted);}
+.role-btn.active{border-color:var(--green);background:var(--green-pale);color:var(--green);}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:.4rem;letter-spacing:.2px;}
+.form-input{width:100%;padding:.75rem 1.1rem;border:1.5px solid var(--border);border-radius:11px;font-family:inherit;font-size:.9rem;color:var(--text);transition:.2s;outline:none;background:#fafffe;}
+.form-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(13,110,79,.09);background:#fff;}
+.auth-btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:.2s;margin-top:.5rem;box-shadow:0 6px 20px rgba(13,110,79,0.28);}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(13,110,79,0.36);}
+.auth-switch{text-align:center;margin-top:1rem;font-size:.84rem;color:var(--text-muted);}
+.auth-switch a{color:var(--green);font-weight:700;cursor:pointer;}
+.auth-error{background:#fee2e2;color:#dc2626;padding:.65rem 1rem;border-radius:9px;font-size:.82rem;margin-bottom:1rem;display:none;font-weight:600;}
+
+/* ── DASHBOARD LAYOUT ── */
+.dash-layout{display:flex;min-height:calc(100vh - 68px);}
+.sidebar{width:250px;background:#fff;border-right:1px solid var(--border);padding:1.5rem 1rem;flex-shrink:0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto;}
+.sidebar-section-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);padding:.4rem .9rem;margin-top:.5rem;margin-bottom:.3rem;}
+.sidebar-item{display:flex;align-items:center;gap:.7rem;padding:.72rem .9rem;border-radius:11px;font-size:.87rem;color:var(--text-muted);cursor:pointer;transition:.2s;margin-bottom:.2rem;font-weight:600;}
+.sidebar-item:hover,.sidebar-item.active{background:var(--green-pale);color:var(--green);}
+.sidebar-item.active{font-weight:700;}
+.sidebar-item .icon{font-size:1rem;width:20px;text-align:center;}
+.sidebar-divider{height:1px;background:var(--border);margin:1rem 0;}
+.dash-content{flex:1;padding:2.5rem;overflow-y:auto;min-height:0;}
+.dash-greeting{margin-bottom:2rem;}
+.dash-greeting h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--text);font-weight:900;}
+.dash-greeting p{color:var(--text-muted);font-size:.9rem;margin-top:.3rem;}
+.quick-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:2rem;}
+.quick-card{background:#fff;border-radius:var(--radius);padding:1.4rem;border:1px solid var(--border);cursor:pointer;transition:.25s;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow);}
+.quick-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:var(--green);}
+.quick-card .q-icon{font-size:1.9rem;}
+.quick-card .q-title{font-weight:800;font-size:.95rem;color:var(--text);}
+.quick-card .q-sub{font-size:.76rem;color:var(--text-muted);}
+
+/* ── CHAT ── */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 230px);background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+.chat-header{padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.9rem;background:linear-gradient(135deg,#e8f8f2,#f0fdf9);}
+.chat-header .ch-avatar{width:44px;height:44px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;}
+.chat-header .ch-name{font-weight:800;color:var(--text);}
+.chat-header .ch-status{font-size:.76rem;color:var(--green);font-weight:600;}
+.chat-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.msg{max-width:78%;display:flex;flex-direction:column;gap:.3rem;}
+.msg.bot{align-self:flex-start;}
+.msg.user{align-self:flex-end;}
+.msg-bubble{padding:.85rem 1.15rem;border-radius:18px;font-size:.89rem;line-height:1.6;}
+.msg.bot .msg-bubble{background:var(--green-pale);color:var(--text);border-bottom-left-radius:5px;}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-bottom-right-radius:5px;}
+.msg-time{font-size:.68rem;color:var(--text-muted);}
+.msg.user .msg-time{text-align:right;}
+.bias-flag{background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1.5px solid #fbbf24;border-radius:12px;padding:.8rem 1.1rem;font-size:.82rem;color:#92400e;display:flex;gap:.6rem;align-items:flex-start;margin-top:.3rem;font-weight:500;}
+.chat-input-area{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.7rem;align-items:center;background:#fff;}
+.chat-input{flex:1;padding:.75rem 1.1rem;border:1.5px solid var(--border);border-radius:12px;font-family:inherit;font-size:.9rem;outline:none;transition:.2s;}
+.chat-input:focus{border-color:var(--green);}
+.chat-send-btn{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:11px;width:44px;height:44px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.2s;box-shadow:0 4px 14px rgba(13,110,79,0.25);}
+.chat-send-btn:hover{transform:scale(1.05);}
+.typing-indicator{display:flex;align-items:center;gap:.4rem;padding:.6rem .9rem;background:var(--green-pale);border-radius:12px;width:fit-content;}
+.typing-dot{width:7px;height:7px;background:var(--green2);border-radius:50%;animation:bounce .8s infinite;}
+.typing-dot:nth-child(2){animation-delay:.15s;}
+.typing-dot:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ── MEDICINE SEARCH ── */
+.medicine-search-bar{display:flex;gap:.8rem;margin-bottom:1.5rem;}
+.medicine-search-bar input{flex:1;padding:.8rem 1.2rem;border:1.5px solid var(--border);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;transition:.2s;}
+.medicine-search-bar input:focus{border-color:var(--green);}
+.medicine-search-bar button{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:12px;padding:.8rem 1.5rem;font-family:inherit;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(13,110,79,0.22);}
+.medicine-result{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:1.8rem;margin-bottom:1rem;box-shadow:var(--shadow);}
+.medicine-result h3{color:var(--green);font-size:1.15rem;margin-bottom:.5rem;font-weight:800;font-family:'Playfair Display',serif;}
+.medicine-result .med-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem;margin-top:.9rem;}
+.med-info-card{background:var(--green-pale);border-radius:11px;padding:.9rem;font-size:.83rem;}
+.med-info-card .med-label{font-weight:800;color:var(--green);margin-bottom:.3rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;}
+
+/* ── MEDICINES GRID IN DASHBOARD ── */
+.med-grid-home{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-top:1.5rem;}
+.med-home-card{background:#fff;border-radius:var(--radius-sm);padding:1rem;border:1px solid var(--border);text-align:center;cursor:pointer;transition:.2s;box-shadow:var(--shadow);}
+.med-home-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.med-home-card .mhc-img{font-size:2.2rem;margin-bottom:.6rem;}
+.med-home-card .mhc-name{font-size:.8rem;font-weight:700;color:var(--text);}
+.med-home-card .mhc-cat{font-size:.68rem;color:var(--text-muted);margin-top:.15rem;}
+
+/* ── DOCTORS ── */
+.doctor-filters{display:flex;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.filter-btn{padding:.45rem 1rem;border-radius:22px;border:1.5px solid var(--border);background:#fff;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;color:var(--text-muted);}
+.filter-btn.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(13,110,79,0.2);}
+.doctors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;}
+.doctor-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:.25s;cursor:pointer;box-shadow:var(--shadow);}
+.doctor-card:hover{border-color:var(--green);box-shadow:var(--shadow2);transform:translateY(-2px);}
+.doc-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;flex-shrink:0;box-shadow:0 4px 16px rgba(13,110,79,0.2);}
+.doc-name{font-weight:800;color:var(--text);font-size:.95rem;}
+.doc-spec{font-size:.77rem;color:var(--green);font-weight:700;margin:.2rem 0;}
+.doc-info{font-size:.77rem;color:var(--text-muted);}
+.doc-rating{display:flex;align-items:center;gap:.25rem;font-size:.77rem;color:var(--amber);font-weight:700;margin-top:.3rem;}
+.doc-badge{display:inline-block;background:var(--green-pale);color:var(--green);font-size:.7rem;padding:.18rem .6rem;border-radius:20px;margin-top:.4rem;font-weight:700;}
+.doc-badge.unavailable{background:#fee2e2;color:#dc2626;}
+.distance-badge{font-size:.7rem;color:var(--text-muted);background:var(--bg);padding:.15rem .5rem;border-radius:20px;margin-left:.4rem;font-weight:500;}
+
+/* ── APPOINTMENT BOOKING (interactive) ── */
+.appt-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.appt-modal-overlay.show{display:flex;}
+.appt-modal{background:#fff;border-radius:24px;padding:2rem;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.appt-modal h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;margin-bottom.3rem;}
+.appt-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1rem 0;}
+.slot-btn{padding:.55rem;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s;text-align:center;}
+.slot-btn:hover,.slot-btn.active{border-color:var(--green);background:var(--green-pale);color:var(--green);}
+.slot-btn.booked{background:#fee2e2;border-color:#fca5a5;color:#dc2626;cursor:not-allowed;}
+
+/* ── NOVA ── */
+.nova-wrap{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:2rem;max-width:720px;box-shadow:var(--shadow);}
+.record-btn{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;font-size:1.8rem;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;margin:1.5rem auto;box-shadow:0 6px 24px rgba(13,110,79,0.35);}
+.record-btn:hover{transform:scale(1.06);}
+.record-btn.recording{background:linear-gradient(135deg,#dc2626,#ef4444);animation:pulse-rec 1s infinite;}
+@keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 22px rgba(239,68,68,0)}}
+.soap-output{background:var(--bg);border-radius:var(--radius-sm);padding:1.5rem;margin-top:1.5rem;border:1px solid var(--border);}
+.soap-section{margin-bottom:1.2rem;}
+.soap-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--green);margin-bottom:.4rem;}
+.soap-text{font-size:.87rem;color:var(--text);line-height:1.65;background:#fff;padding:.75rem;border-radius:9px;border:1px solid var(--border);}
+
+/* ── DARA ── */
+.dara-wrap{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:1.8rem;box-shadow:var(--shadow);}
+.dara-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
+.dara-patient-info h3{font-size:1.1rem;font-weight:800;}
+.dara-patient-info p{font-size:.82rem;color:var(--text-muted);}
+.analysis-section{margin-bottom:1.5rem;}
+.analysis-title{font-weight:800;font-size:.9rem;color:var(--text);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+.diagnosis-card{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:11px;padding:.9rem 1.1rem;margin-bottom:.5rem;border:1px solid var(--border);}
+.diag-name{font-weight:700;font-size:.9rem;}
+.confidence-bar{display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:var(--text-muted);}
+.bar{width:90px;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green2));border-radius:4px;}
+
+/* ── PATIENT SECTION ── */
+.patient-detail-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;box-shadow:var(--shadow);cursor:pointer;transition:.25s;}
+.patient-detail-card:hover{border-color:var(--green);box-shadow:var(--shadow2);}
+.patient-detail-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+.patient-avatar-lg{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;font-weight:800;}
+.patient-name{font-weight:800;font-size:1rem;}
+.patient-meta{font-size:.78rem;color:var(--text-muted);}
+.patient-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;}
+.patient-tag{font-size:.72rem;padding:.2rem .7rem;border-radius:20px;font-weight:700;}
+.pt-condition{background:#fee2e2;color:#dc2626;}
+.pt-medicine{background:#eff6ff;color:#2563eb;}
+.pt-normal{background:var(--green-pale);color:var(--green);}
+.patient-report-section{background:var(--bg);border-radius:var(--radius-sm);padding:1.2rem;margin-top:1rem;border:1px solid var(--border);display:none;}
+.patient-report-section.open{display:block;}
+.report-ai-output{margin-top:1rem;background:#fff;border-radius:10px;padding:1rem;border:1px solid var(--border);font-size:.85rem;line-height:1.7;color:var(--text);}
+.report-section-title{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--green);margin-bottom:.4rem;margin-top:.8rem;}
+
+/* ── HISTORY ── */
+.history-item{padding:1rem 1.2rem;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:.7rem;display:flex;align-items:flex-start;gap:.9rem;background:#fff;box-shadow:var(--shadow);transition:.2s;}
+.history-item:hover{border-color:var(--green);}
+.history-dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green2));flex-shrink:0;margin-top:.3rem;}
+.history-info .h-date{font-size:.73rem;color:var(--text-muted);font-weight:600;}
+.history-info .h-text{font-size:.88rem;font-weight:600;}
+.history-info .h-content{font-size:.8rem;color:var(--text-muted);margin-top:.3rem;line-height:1.5;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--text);color:#fff;padding:.85rem 1.6rem;border-radius:14px;font-size:.87rem;z-index:9999;opacity:0;transform:translateY(12px);transition:.3s;pointer-events:none;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,0.15);}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.success{background:linear-gradient(135deg,var(--green),var(--green2));}
+.toast.warning{background:linear-gradient(135deg,#d97706,var(--amber));}
+.toast.error{background:linear-gradient(135deg,#dc2626,var(--red));}
+
+/* ── LOADING ── */
+.loading-spinner{display:inline-block;width:20px;height:20px;border:2.5px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MISC ── */
+.empty-state{text-align:center;padding:3.5rem;color:var(--text-muted);}
+.empty-state .es-icon{font-size:3.5rem;margin-bottom:1rem;}
+.empty-state p{font-size:.92rem;}
+.badge{display:inline-flex;align-items:center;padding:.22rem .75rem;border-radius:22px;font-size:.73rem;font-weight:800;}
+.badge-critical{background:#fee2e2;color:#dc2626;}
+.badge-high{background:#fff7ed;color:#c2410c;}
+.badge-medium{background:#fefce8;color:#854d0e;}
+.badge-normal{background:var(--green-pale);color:var(--green);}
+.section-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:1.7rem;margin-bottom:1.5rem;box-shadow:var(--shadow);}
+.section-card h3{font-size:1rem;font-weight:800;margin-bottom:1rem;color:var(--text);display:flex;align-items:center;gap:.5rem;font-family:'Playfair Display',serif;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;}
+th{text-align:left;padding:.65rem .9rem;background:var(--bg);color:var(--text-muted);font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.4px;}
+td{padding:.75rem .9rem;border-bottom:1px solid var(--border);color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--green-pale);}
+
+/* ── FOOTER ── */
+.landing-footer{background:var(--text);color:#fff;padding:3rem 2.5rem;text-align:center;}
+.landing-footer .logo{justify-content:center;margin-bottom:.8rem;filter:brightness(10);}
+.landing-footer p{font-size:.83rem;opacity:.6;}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .agents-grid{grid-template-columns:1fr;}
+  .appt-inner{grid-template-columns:1fr;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .dash-content{padding:1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- APPOINTMENT MODAL -->
+<div class="appt-modal-overlay" id="appt-modal">
+  <div class="appt-modal">
+    <h3>📅 Book Appointment</h3>
+    <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;" id="appt-doc-name">Select a time slot</p>
+    <div class="form-group"><label>Select Date</label><input class="form-input" type="date" id="appt-date" min=""></div>
+    <div class="form-group"><label>Available Slots</label>
+      <div class="appt-slots">
+        <button class="slot-btn active" onclick="selectSlot(this)">9:00 AM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">9:30 AM</button>
+        <button class="slot-btn booked">10:00 AM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">10:30 AM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">11:00 AM</button>
+        <button class="slot-btn booked">11:30 AM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">2:00 PM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">2:30 PM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">3:00 PM</button>
+        <button class="slot-btn booked">3:30 PM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">4:00 PM</button>
+        <button class="slot-btn" onclick="selectSlot(this)">4:30 PM</button>
+      </div>
+    </div>
+    <div class="form-group"><label>Reason for visit</label><textarea class="form-input" id="appt-reason" rows="2" placeholder="Brief reason..."></textarea></div>
+    <div style="display:flex;gap:.8rem;margin-top:.5rem;">
+      <button class="btn btn-primary" style="flex:1" onclick="confirmAppointment()">✅ Confirm Booking</button>
+      <button class="btn btn-outline" onclick="closeApptModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: LANDING ===== -->
+<div class="page active" id="page-landing">
+  <nav>
+    <div class="logo" onclick="showPage('page-landing')">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+    <div class="nav-links">
+      <button class="nav-btn" onclick="document.getElementById('agents-section').scrollIntoView({behavior:'smooth'})">Features</button>
+      <button class="nav-btn" onclick="document.getElementById('medicines-section').scrollIntoView({behavior:'smooth'})">Medicines</button>
+      <button class="nav-btn" onclick="document.getElementById('appointment-section').scrollIntoView({behavior:'smooth'})">Appointments</button>
+      <button class="nav-btn" onclick="showPage('page-login')">Login</button>
+      <button class="nav-btn primary" onclick="showPage('page-register')">Get Started →</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">✨ Powered by Claude AI &nbsp;•&nbsp; Trusted by 50,000+ Patients</div>
+        <h1>Healthcare that puts<br><em>you</em> first, always</h1>
+        <p>Three specialized AI agents — ARIA, DARA, and NOVA — working together to make every doctor visit smarter, faster, and more accurate. From symptoms to SOAP notes in seconds.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="showPage('page-register')">Start Free — No Card Needed</button>
+          <button class="btn btn-outline" onclick="demoMode()">🎬 Live Demo</button>
+        </div>
+        <div style="margin-top:2rem;display:flex;gap:2rem;">
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">4.9★</strong><br>Patient Rating</div>
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">50K+</strong><br>Consultations</div>
+          <div style="font-size:.8rem;color:var(--text-muted);"><strong style="color:var(--text);font-size:1.1rem;font-family:'Playfair Display',serif;">2.5h</strong><br>Saved/Day</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card hc1">
+          <div class="hc-label"><span class="pulse-dot"></span>ARIA Live</div>
+          <div class="hc-val">🩺 Intake</div>
+          <div class="hc-sub">Collecting symptoms in Hindi & English</div>
+        </div>
+        <div class="hero-card hc2">
+          <div class="hc-label">🧠 DARA Analysis</div>
+          <div class="hc-val">94%</div>
+          <div class="hc-sub">Diagnosis accuracy boost</div>
+        </div>
+        <div class="hero-card hc3">
+          <div class="hc-label">🎙️ NOVA Today</div>
+          <div style="display:flex;gap:.5rem;align-items:center;margin:.3rem 0;">
+            <div style="font-size:1.3rem;font-weight:800;color:var(--green);font-family:'Playfair Display',serif;">12</div>
+            <div style="font-size:.75rem;color:var(--text-muted);">SOAP notes generated</div>
+          </div>
+          <div style="font-size:.75rem;color:var(--text-muted);">2.5 hours saved for Dr. Sharma</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num">35%</div><div class="stat-label">Doctor time lost to paperwork</div></div>
+      <div class="stat-item"><div class="stat-num">50%</div><div class="stat-label">Higher AI misdiagnosis in women</div></div>
+      <div class="stat-item"><div class="stat-num">2.5h</div><div class="stat-label">Saved per doctor per day</div></div>
+      <div class="stat-item"><div class="stat-num">₹4.2L</div><div class="stat-label">Avg cost of misdiagnosis in India</div></div>
+    </div>
+  </div>
+
+  <!-- AI AGENTS -->
+  <div class="section" id="agents-section">
+    <div style="text-align:center;">
+      <div class="section-tag">🤖 Three AI Agents</div>
+      <h2 class="section-title" style="text-align:center;">Meet the MEDICURE Team</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">Each agent specializes in a different phase of your healthcare journey — together they create a seamless, intelligent experience.</p>
+    </div>
+    <div class="agents-grid">
+      <div class="agent-card aria" onclick="showPage('page-register')">
+        <div class="agent-icon">🩺</div>
+        <div class="agent-name">ARIA</div>
+        <div class="agent-full">Automated Reception & Intake Agent</div>
+        <div class="agent-desc">Talks to patients like a caring nurse — collects symptoms, pulls history, and flags AI bias before the doctor walks in. Supports Hindi + English + Voice.</div>
+        <div class="agent-tag">Hindi + English + Voice</div>
+      </div>
+      <div class="agent-card dara" onclick="showPage('page-register')">
+        <div class="agent-icon">🧠</div>
+        <div class="agent-name">DARA</div>
+        <div class="agent-full">Doctor Advisory & Response Agent</div>
+        <div class="agent-desc">Reads 5 years of patient history in 2 minutes. Finds patterns, missed diagnoses, and treatment gaps that no single doctor could catch manually.</div>
+        <div class="agent-tag">ChronicIQ Engine</div>
+      </div>
+      <div class="agent-card nova" onclick="showPage('page-register')">
+        <div class="agent-icon">🎙️</div>
+        <div class="agent-name">NOVA</div>
+        <div class="agent-full">Note & Voice Auto-documentation Agent</div>
+        <div class="agent-desc">Doctor speaks for 60 seconds. NOVA generates a complete SOAP note automatically. 2–3 hours saved every single day per doctor.</div>
+        <div class="agent-tag">Voice → SOAP in 10s</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDICINES SHOWCASE -->
+  <div class="medicines-showcase" id="medicines-section">
+    <div class="med-showcase-inner">
+      <div class="section-tag">💊 Medicine Database</div>
+      <h2 class="section-title">30+ Medicines at a Glance</h2>
+      <p class="section-sub">Instantly access dosage, side effects, interactions & precautions for any medicine — powered by AI.</p>
+      <div class="medicines-marquee-wrap">
+        <div class="medicines-track" id="med-track-1"></div>
+      </div>
+      <div class="medicines-marquee-wrap" style="margin-top:1rem;">
+        <div class="medicines-track medicines-track2" id="med-track-2"></div>
+      </div>
+      <div style="text-align:center;margin-top:2rem;">
+        <button class="btn btn-primary" onclick="showPage('page-register')">Search Any Medicine →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPOINTMENT SECTION -->
+  <div class="appointment-section" id="appointment-section">
+    <div class="appt-inner">
+      <div>
+        <div class="section-tag">📅 Smart Booking</div>
+        <h2 class="section-title">Book Appointments<br>Instantly</h2>
+        <p class="section-sub">No waiting on hold. No paperwork. Just tap, pick a slot, and you're booked. ARIA will prep your doctor before you even arrive.</p>
+        <div class="appt-steps" style="margin-top:2rem;">
+          <div class="appt-step">
+            <div class="appt-step-num">1</div>
+            <div class="appt-step-text"><h4>Chat with ARIA</h4><p>Describe your symptoms in Hindi or English. ARIA collects your intake report.</p></div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">2</div>
+            <div class="appt-step-text"><h4>Pick a Doctor & Slot</h4><p>Browse nearby doctors filtered by specialty, rating, and availability.</p></div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">3</div>
+            <div class="appt-step-text"><h4>Doctor is Ready</h4><p>DARA analyses your history before the appointment. Your doctor walks in prepared.</p></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:2rem;" onclick="showPage('page-register')">Book My Appointment →</button>
+      </div>
+      <div class="appt-form-card">
+        <h3 style="font-family:'Playfair Display',serif;font-weight:900;margin-bottom:1.2rem;">Quick Appointment</h3>
+        <div class="form-group"><label>Your Name</label><input class="form-input" placeholder="Full name" id="landing-appt-name"></div>
+        <div class="form-group"><label>Speciality Needed</label>
+          <select class="form-input" id="landing-appt-spec">
+            <option>General Physician</option><option>Cardiologist</option><option>Dermatologist</option>
+            <option>Orthopedic</option><option>Pediatrician</option><option>Gynecologist</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Preferred Date</label><input class="form-input" type="date" id="landing-appt-date"></div>
+        <div class="form-group"><label>Brief Complaint</label><textarea class="form-input" rows="2" placeholder="What brings you in?" id="landing-appt-complaint"></textarea></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:.5rem;" onclick="landingBookAppt()">Request Appointment ✅</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="landing-footer">
+    <div class="logo" style="justify-content:center;margin-bottom:.8rem;filter:invert(1) brightness(2);">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+    <p>Transforming healthcare with AI · India's most trusted medical AI platform</p>
+    <p style="margin-top:.5rem;">© 2025 MEDICURE · Built with ❤️ and Claude AI</p>
+  </div>
+</div>
+
+<!-- ===== PAGE: LOGIN ===== -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-orb auth-orb1"></div>
+    <div class="auth-orb auth-orb2"></div>
+    <div class="auth-box">
+      <div class="auth-logo">🏥 MEDICURE</div>
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-sub">Sign in to your account</p>
+      <div class="role-toggle">
+        <button class="role-btn active" id="login-patient-btn" onclick="setLoginRole('patient')">👤 Patient</button>
+        <button class="role-btn" id="login-doctor-btn" onclick="setLoginRole('doctor')">👨‍⚕️ Doctor</button>
+      </div>
+      <div class="auth-error" id="login-error"></div>
+      <div class="form-group"><label>Email</label><input class="form-input" type="email" id="login-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="form-group"><label>Password</label><input class="form-input" type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="auth-btn" onclick="doLogin()">Sign In →</button>
+      <div class="auth-switch" style="margin-top:.8rem;">No account? <a onclick="showPage('page-register')">Register free</a></div>
+      <div class="auth-switch" style="margin-top:.4rem;"><a onclick="showPage('page-landing')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: REGISTER ===== -->
+<div class="page" id="page-register">
+  <div class="auth-wrap">
+    <div class="auth-orb auth-orb1"></div>
+    <div class="auth-orb auth-orb2"></div>
+    <div class="auth-box">
+      <div class="auth-logo">🏥 MEDICURE</div>
+      <h2 class="auth-title">Create account</h2>
+      <p class="auth-sub">Join MEDICURE — it's completely free</p>
+      <div class="role-toggle">
+        <button class="role-btn active" id="reg-patient-btn" onclick="setRegRole('patient')">👤 Patient</button>
+        <button class="role-btn" id="reg-doctor-btn" onclick="setRegRole('doctor')">👨‍⚕️ Doctor</button>
+      </div>
+      <div class="auth-error" id="reg-error"></div>
+      <div class="form-group"><label>Full Name</label><input class="form-input" type="text" id="reg-name" placeholder="Your full name"></div>
+      <div class="form-group" id="reg-spec-group" style="display:none"><label>Specialization</label><input class="form-input" type="text" id="reg-spec" placeholder="e.g. Cardiologist, General Physician"></div>
+      <div class="form-group"><label>Email</label><input class="form-input" type="email" id="reg-email" placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input class="form-input" type="password" id="reg-password" placeholder="Min 6 characters"></div>
+      <div class="form-group"><label>Age</label><input class="form-input" type="number" id="reg-age" placeholder="Your age"></div>
+      <div class="form-group"><label>Gender</label>
+        <select class="form-input" id="reg-gender">
+          <option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option>
+        </select>
+      </div>
+      <button class="auth-btn" onclick="doRegister()">Create Account →</button>
+      <div class="auth-switch" style="margin-top:.8rem;">Already have an account? <a onclick="showPage('page-login')">Sign In</a></div>
+      <div class="auth-switch" style="margin-top:.4rem;"><a onclick="showPage('page-landing')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: PATIENT DASHBOARD ===== -->
+<div class="page" id="page-patient">
+  <nav>
+    <div class="logo" onclick="showSection('section-home')">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+    <div class="user-info">
+      <div class="avatar" id="patient-avatar">P</div>
+      <span id="patient-name-nav" style="font-weight:600;">Patient</span>
+      <button class="nav-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="sidebar-section-label">Main</div>
+      <div class="sidebar-item active" id="sb-home" onclick="showSection('section-home')"><span class="icon">🏠</span> Home</div>
+      <div class="sidebar-item" id="sb-aria" onclick="showSection('section-aria')"><span class="icon">🩺</span> Talk to ARIA</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">Healthcare</div>
+      <div class="sidebar-item" id="sb-medicines" onclick="showSection('section-medicines')"><span class="icon">💊</span> Medicines</div>
+      <div class="sidebar-item" id="sb-doctors" onclick="showSection('section-doctors')"><span class="icon">👨‍⚕️</span> Find Doctors</div>
+      <div class="sidebar-item" id="sb-appointments" onclick="showSection('section-appointments')"><span class="icon">📅</span> Appointments</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">Records</div>
+      <div class="sidebar-item" id="sb-history" onclick="showSection('section-history')"><span class="icon">📋</span> My History</div>
+      <div class="sidebar-item" id="sb-reports" onclick="showSection('section-reports')"><span class="icon">📊</span> AI Reports</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span> Logout</div>
+    </div>
+    <div class="dash-content">
+      <!-- HOME -->
+      <div id="section-home">
+        <div class="dash-greeting">
+          <h2>Good day, <span id="patient-greeting-name">there</span> 👋</h2>
+          <p id="patient-greeting-sub">Here's your health overview for today</p>
+        </div>
+        <div class="quick-cards">
+          <div class="quick-card" onclick="showSection('section-aria')"><div class="q-icon">🩺</div><div class="q-title">Talk to ARIA</div><div class="q-sub">Describe your symptoms</div></div>
+          <div class="quick-card" onclick="showSection('section-medicines')"><div class="q-icon">💊</div><div class="q-title">Medicine Info</div><div class="q-sub">Search any medicine</div></div>
+          <div class="quick-card" onclick="showSection('section-doctors')"><div class="q-icon">📍</div><div class="q-title">Find Doctors</div><div class="q-sub">Nearest doctors</div></div>
+          <div class="quick-card" onclick="showSection('section-appointments')"><div class="q-icon">📅</div><div class="q-title">Appointments</div><div class="q-sub">Book & manage</div></div>
+          <div class="quick-card" onclick="showSection('section-reports')"><div class="q-icon">📊</div><div class="q-title">AI Reports</div><div class="q-sub">Health insights</div></div>
+          <div class="quick-card" onclick="showSection('section-history')"><div class="q-icon">📋</div><div class="q-title">My History</div><div class="q-sub">Past consultations</div></div>
+        </div>
+        <div class="section-card" style="background:linear-gradient(135deg,#e8f8f2,#f0fdf9);border-color:var(--green);">
+          <h3>💡 Daily Health Tip from ARIA</h3>
+          <div id="daily-tip" style="color:var(--text-muted);font-size:.9rem;line-height:1.75;">Loading tip...</div>
+        </div>
+        <div class="section-card">
+          <h3>🌟 Popular Medicines</h3>
+          <div class="med-grid-home" id="home-med-grid"></div>
+        </div>
+      </div>
+
+      <!-- ARIA -->
+      <div id="section-aria" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">Talk to ARIA 🩺</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;">Describe your symptoms. ARIA will prepare a complete report for your doctor.</p>
+        <div class="chat-wrap">
+          <div class="chat-header">
+            <div class="ch-avatar">🩺</div>
+            <div>
+              <div class="ch-name">ARIA — AI Intake Agent</div>
+              <div class="ch-status">● Online — Hindi + English supported</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="aria-messages">
+            <div class="msg bot">
+              <div class="msg-bubble">Namaste! 🙏 I'm ARIA, your AI health intake agent. I'm here to help collect your symptoms and prepare a detailed report for your doctor.<br><br>Please tell me — what brings you here today? Describe how you're feeling in your own words. (Hindi ya English, koi bhi language use kar sakte hain)</div>
+              <div class="msg-time">Just now</div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input class="chat-input" id="aria-input" type="text" placeholder="Type your symptoms... (Hindi or English)" onkeydown="if(event.key==='Enter')sendARIA()">
+            <button class="chat-send-btn" onclick="sendARIA()">➤</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDICINES -->
+      <div id="section-medicines" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">💊 Medicine Information</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">AI-powered medicine info — dosage, uses, side effects & precautions.</p>
+        <div class="medicine-search-bar">
+          <input type="text" id="med-input" placeholder="Search medicine... e.g. Paracetamol, Metformin, Amlodipine" onkeydown="if(event.key==='Enter')searchMedicine()">
+          <button onclick="searchMedicine()">Search 🔍</button>
+        </div>
+        <div id="med-results"></div>
+        <div class="section-card">
+          <h3>🌟 Quick Search</h3>
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+            <button class="filter-btn active" onclick="quickMed('Paracetamol')">Paracetamol</button>
+            <button class="filter-btn" onclick="quickMed('Metformin')">Metformin</button>
+            <button class="filter-btn" onclick="quickMed('Amlodipine')">Amlodipine</button>
+            <button class="filter-btn" onclick="quickMed('Omeprazole')">Omeprazole</button>
+            <button class="filter-btn" onclick="quickMed('Aspirin')">Aspirin</button>
+            <button class="filter-btn" onclick="quickMed('Cetirizine')">Cetirizine</button>
+            <button class="filter-btn" onclick="quickMed('Azithromycin')">Azithromycin</button>
+            <button class="filter-btn" onclick="quickMed('Atorvastatin')">Atorvastatin</button>
+          </div>
+        </div>
+        <div class="section-card">
+          <h3>💊 All Medicines Library</h3>
+          <div class="med-grid-home" id="patient-med-grid"></div>
+        </div>
+      </div>
+
+      <!-- DOCTORS -->
+      <div id="section-doctors" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📍 Find Nearest Doctors</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1rem;">Highly rated doctors near your location.</p>
+        <div style="display:flex;gap:.8rem;margin-bottom:1.5rem;align-items:center;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="getLocation()">📍 Use My Location</button>
+          <span id="location-status" style="font-size:.82rem;color:var(--text-muted);">Location not set</span>
+        </div>
+        <div class="doctor-filters">
+          <button class="filter-btn active" onclick="filterDocs('All')">All</button>
+          <button class="filter-btn" onclick="filterDocs('General Physician')">General Physician</button>
+          <button class="filter-btn" onclick="filterDocs('Cardiologist')">Cardiologist</button>
+          <button class="filter-btn" onclick="filterDocs('Dermatologist')">Dermatologist</button>
+          <button class="filter-btn" onclick="filterDocs('Orthopedic')">Orthopedic</button>
+          <button class="filter-btn" onclick="filterDocs('Pediatrician')">Pediatrician</button>
+          <button class="filter-btn" onclick="filterDocs('Gynecologist')">Gynecologist</button>
+        </div>
+        <div class="doctors-grid" id="doctors-grid"></div>
+      </div>
+
+      <!-- APPOINTMENTS -->
+      <div id="section-appointments" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📅 My Appointments</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Manage your upcoming and past appointments.</p>
+        <div id="appointments-list"></div>
+        <div class="section-card" style="margin-top:1rem;">
+          <h3>🔍 Book New Appointment</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">Go to Find Doctors to book an appointment with any available doctor.</p>
+          <button class="btn btn-primary btn-sm" onclick="showSection('section-doctors')">Browse Doctors →</button>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div id="section-history" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem;font-weight:900;">📋 My Medical History</h2>
+        <div id="patient-history-list"></div>
+      </div>
+
+      <!-- AI REPORTS -->
+      <div id="section-reports" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📊 AI Health Reports</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Generate a comprehensive AI health analysis based on your history.</p>
+        <div class="section-card">
+          <h3>🤖 Generate Health Report</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">Describe your current health concerns and get an AI-powered comprehensive report.</p>
+          <div class="form-group"><label>Current Health Concerns</label><textarea class="form-input" id="report-concerns" rows="3" placeholder="e.g. I have been having headaches for 2 weeks, mild fever, and fatigue. I also have diabetes type 2 and hypertension..."></textarea></div>
+          <div class="form-group"><label>Known Conditions (optional)</label><input class="form-input" id="report-conditions" placeholder="e.g. Diabetes, Hypertension, Asthma"></div>
+          <div class="form-group"><label>Current Medications (optional)</label><input class="form-input" id="report-medications" placeholder="e.g. Metformin 500mg, Amlodipine 5mg"></div>
+          <button class="btn btn-primary" onclick="generateHealthReport()" id="report-btn">🤖 Generate AI Health Report</button>
+        </div>
+        <div id="report-output"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: DOCTOR DASHBOARD ===== -->
+<div class="page" id="page-doctor">
+  <nav>
+    <div class="logo">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+    <div class="user-info">
+      <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#7c3aed);" id="doctor-avatar">D</div>
+      <span id="doctor-name-nav" style="font-weight:600;">Doctor</span>
+      <button class="nav-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="sidebar-section-label">Dashboard</div>
+      <div class="sidebar-item active" id="dsb-home" onclick="showDocSection('dsection-home')"><span class="icon">🏠</span> Home</div>
+      <div class="sidebar-item" id="dsb-dara" onclick="showDocSection('dsection-dara')"><span class="icon">🧠</span> DARA Analysis</div>
+      <div class="sidebar-item" id="dsb-nova" onclick="showDocSection('dsection-nova')"><span class="icon">🎙️</span> NOVA Notes</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">Patients</div>
+      <div class="sidebar-item" id="dsb-patients" onclick="showDocSection('dsection-patients')"><span class="icon">👥</span> Patient Cases</div>
+      <div class="sidebar-item" id="dsb-reports" onclick="showDocSection('dsection-dreports')"><span class="icon">📊</span> Patient Reports</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">Tools</div>
+      <div class="sidebar-item" id="dsb-medicines" onclick="showDocSection('dsection-med')"><span class="icon">💊</span> Medicines</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-item" onclick="doLogout()"><span class="icon">🚪</span> Logout</div>
+    </div>
+    <div class="dash-content">
+      <!-- DOC HOME -->
+      <div id="dsection-home">
+        <div class="dash-greeting">
+          <h2>Welcome, Dr. <span id="doctor-greeting-name">there</span> 👨‍⚕️</h2>
+          <p>Your AI-powered medical assistant is ready. Let's make today count.</p>
+        </div>
+        <div class="quick-cards">
+          <div class="quick-card" onclick="showDocSection('dsection-dara')"><div class="q-icon">🧠</div><div class="q-title">DARA Analysis</div><div class="q-sub">Patient history insights</div></div>
+          <div class="quick-card" onclick="showDocSection('dsection-nova')"><div class="q-icon">🎙️</div><div class="q-title">NOVA Notes</div><div class="q-sub">Voice to SOAP auto</div></div>
+          <div class="quick-card" onclick="showDocSection('dsection-patients')"><div class="q-icon">👥</div><div class="q-title">Patient Cases</div><div class="q-sub">Review ARIA reports</div></div>
+          <div class="quick-card" onclick="showDocSection('dsection-dreports')"><div class="q-icon">📊</div><div class="q-title">Patient Reports</div><div class="q-sub">AI-generated reports</div></div>
+          <div class="quick-card" onclick="showDocSection('dsection-med')"><div class="q-icon">💊</div><div class="q-title">Medicine Search</div><div class="q-sub">Drug info & interactions</div></div>
+        </div>
+        <div class="section-card" style="background:linear-gradient(135deg,#e8f8f2,#f0fdf9);border-color:var(--green);">
+          <h3>📈 Today's Stats</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem;margin-top:.5rem;">
+            <div><div style="font-size:1.7rem;font-weight:900;color:var(--green);font-family:'Playfair Display',serif;">2.5h</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Saved today with NOVA</div></div>
+            <div><div style="font-size:1.7rem;font-weight:900;color:#2563eb;font-family:'Playfair Display',serif;" id="doc-cases-count">0</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Patient cases waiting</div></div>
+            <div><div style="font-size:1.7rem;font-weight:900;color:var(--amber);font-family:'Playfair Display',serif;">12</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">SOAP notes generated</div></div>
+            <div><div style="font-size:1.7rem;font-weight:900;color:#7c3aed;font-family:'Playfair Display',serif;">3</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Bias flags caught</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DARA -->
+      <div id="dsection-dara" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">🧠 DARA — Patient Analysis</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Enter patient details for full history analysis and diagnosis suggestions.</p>
+        <div class="section-card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="form-group"><label>Patient Name</label><input class="form-input" id="dara-name" placeholder="Patient name"></div>
+            <div class="form-group"><label>Age</label><input class="form-input" id="dara-age" type="number" placeholder="Age"></div>
+            <div class="form-group"><label>Gender</label><select class="form-input" id="dara-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+            <div class="form-group"><label>Chief Complaint</label><input class="form-input" id="dara-complaint" placeholder="Main complaint"></div>
+          </div>
+          <div class="form-group"><label>Medical History (Known conditions, medicines)</label><textarea class="form-input" id="dara-history" rows="3" placeholder="e.g. Hypertension since 2020, on Amlodipine 5mg. Diabetes Type 2 since 2019..."></textarea></div>
+          <div class="form-group"><label>Vitals (optional)</label><input class="form-input" id="dara-vitals" placeholder="e.g. BP 140/90, Temp 98.6F, SpO2 97%, Pulse 82"></div>
+          <button class="btn btn-primary" onclick="runDARA()" id="dara-btn">🧠 Analyse with DARA</button>
+        </div>
+        <div id="dara-output"></div>
+      </div>
+
+      <!-- NOVA -->
+      <div id="dsection-nova" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">🎙️ NOVA — Voice Documentation</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Speak for 60 seconds after your consultation. NOVA generates a complete SOAP note instantly.</p>
+        <div class="nova-wrap">
+          <div style="text-align:center;">
+            <p style="color:var(--text-muted);font-size:.88rem;" id="nova-status">Press the mic button and speak about your consultation</p>
+            <button class="record-btn" id="record-btn" onclick="toggleRecording()">🎙️</button>
+            <p style="font-size:.78rem;color:var(--text-muted);" id="nova-timer"></p>
+          </div>
+          <div style="margin:1rem 0;">
+            <label style="font-size:.81rem;font-weight:700;color:var(--text);display:block;margin-bottom:.5rem;">Or type your consultation notes:</label>
+            <textarea class="form-input" id="nova-text-input" rows="4" placeholder="e.g. Patient is a 35 year old male presenting with fever for 3 days, temperature 102.4F, headache, no cough. Prescribed Paracetamol 500mg TDS for 5 days, stay hydrated. Follow up in 3 days if not improving."></textarea>
+            <button class="btn btn-primary btn-sm" style="margin-top:.7rem;" onclick="generateSOAP()">⚡ Generate SOAP Note</button>
+          </div>
+          <div id="soap-output"></div>
+        </div>
+      </div>
+
+      <!-- PATIENTS -->
+      <div id="dsection-patients" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">👥 Patient Cases</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Patients who spoke with ARIA — with full intake reports ready for review.</p>
+        <div id="patient-cases-list"></div>
+      </div>
+
+      <!-- PATIENT REPORTS (NEW) -->
+      <div id="dsection-dreports" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📊 Patient Reports — AI Generated</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Generate comprehensive AI reports for any patient. Share with them after review.</p>
+        <div class="section-card">
+          <h3>🤖 Generate Patient Report</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group"><label>Patient Name</label><input class="form-input" id="rpt-name" placeholder="Patient name"></div>
+            <div class="form-group"><label>Age / Gender</label><input class="form-input" id="rpt-age-gender" placeholder="e.g. 45yr, Male"></div>
+          </div>
+          <div class="form-group"><label>Diagnosis / Chief Complaint</label><input class="form-input" id="rpt-diagnosis" placeholder="e.g. Type 2 Diabetes with hypertension"></div>
+          <div class="form-group"><label>Lab Results / Vitals</label><textarea class="form-input" id="rpt-labs" rows="2" placeholder="e.g. HbA1c: 8.2%, FBS: 180mg/dl, BP: 145/90, BMI: 28.5"></textarea></div>
+          <div class="form-group"><label>Current Treatment / Medications</label><textarea class="form-input" id="rpt-treatment" rows="2" placeholder="e.g. Metformin 1g BD, Amlodipine 5mg OD, lifestyle counselling given"></textarea></div>
+          <button class="btn btn-primary" onclick="generateDoctorReport()" id="drpt-btn">📊 Generate Comprehensive Report</button>
+        </div>
+        <div id="doctor-report-output"></div>
+      </div>
+
+      <!-- DOCTOR MEDICINES -->
+      <div id="dsection-med" style="display:none">
+        <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">💊 Medicine Information</h2>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Clinical drug information with interactions and contraindications.</p>
+        <div class="medicine-search-bar">
+          <input type="text" id="doc-med-input" placeholder="Search medicine..." onkeydown="if(event.key==='Enter')searchDocMedicine()">
+          <button onclick="searchDocMedicine()">Search 🔍</button>
+        </div>
+        <div id="doc-med-results"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// MEDICINES DATA (30+)
+// ═══════════════════════════════════════════
+const ALL_MEDICINES = [
+  {emoji:'💊',name:'Paracetamol',cat:'Analgesic'},
+  {emoji:'🔴',name:'Metformin',cat:'Antidiabetic'},
+  {emoji:'🟢',name:'Amlodipine',cat:'Antihypertensive'},
+  {emoji:'🟡',name:'Omeprazole',cat:'Antacid'},
+  {emoji:'⚪',name:'Aspirin',cat:'Antiplatelet'},
+  {emoji:'🟠',name:'Cetirizine',cat:'Antihistamine'},
+  {emoji:'🔵',name:'Azithromycin',cat:'Antibiotic'},
+  {emoji:'💙',name:'Atorvastatin',cat:'Statin'},
+  {emoji:'🟣',name:'Amoxicillin',cat:'Antibiotic'},
+  {emoji:'❤️',name:'Losartan',cat:'ARB'},
+  {emoji:'💛',name:'Vitamin D3',cat:'Supplement'},
+  {emoji:'💚',name:'Pantoprazole',cat:'PPI'},
+  {emoji:'🔶',name:'Ibuprofen',cat:'NSAID'},
+  {emoji:'🟤',name:'Metoprolol',cat:'Beta Blocker'},
+  {emoji:'🫐',name:'Gabapentin',cat:'Neuropathic'},
+  {emoji:'🍋',name:'Clopidogrel',cat:'Antiplatelet'},
+  {emoji:'🍇',name:'Levothyroxine',cat:'Thyroid'},
+  {emoji:'🌿',name:'Folic Acid',cat:'Vitamin'},
+  {emoji:'🦋',name:'Prednisolone',cat:'Corticosteroid'},
+  {emoji:'🌙',name:'Diazepam',cat:'Sedative'},
+  {emoji:'⭐',name:'Ciprofloxacin',cat:'Antibiotic'},
+  {emoji:'🌊',name:'Furosemide',cat:'Diuretic'},
+  {emoji:'🍀',name:'Iron Sulfate',cat:'Supplement'},
+  {emoji:'🌸',name:'Domperidone',cat:'Antiemetic'},
+  {emoji:'🔮',name:'Montelukast',cat:'Asthma'},
+  {emoji:'🌺',name:'Doxycycline',cat:'Antibiotic'},
+  {emoji:'🫀',name:'Enalapril',cat:'ACE Inhibitor'},
+  {emoji:'🧠',name:'Sertraline',cat:'Antidepressant'},
+  {emoji:'💎',name:'Hydrochloride',cat:'Antimalarial'},
+  {emoji:'🌟',name:'Calcium Carbonate',cat:'Supplement'},
+  {emoji:'🍊',name:'Vitamin C',cat:'Supplement'},
+  {emoji:'🌻',name:'Ranitidine',cat:'H2 Blocker'},
+  {emoji:'🫁',name:'Salbutamol',cat:'Bronchodilator'},
+  {emoji:'💐',name:'Clonazepam',cat:'Anxiolytic'},
+  {emoji:'🏵️',name:'Bisoprolol',cat:'Beta Blocker'},
+];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentUser = null;
+let loginRole = 'patient';
+let regRole = 'patient';
+let isRecording = false;
+let recognition = null;
+let recordTimer = null;
+let recordSeconds = 0;
+let ariaMessages = [];
+let currentFilter = 'All';
+let selectedSlot = '9:00 AM';
+let currentBookingDoctor = '';
+let appointments = [];
+
+const CLAUDE_API = 'https://api.anthropic.com/v1/messages';
+
+// ═══════════════════════════════════════════
+// PAGE ROUTING
+// ═══════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showSection(id) {
+  document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  const map = {'section-home':'sb-home','section-aria':'sb-aria','section-medicines':'sb-medicines','section-doctors':'sb-doctors','section-appointments':'sb-appointments','section-history':'sb-history','section-reports':'sb-reports'};
+  if(map[id]) document.getElementById(map[id]).classList.add('active');
+  if(id === 'section-doctors') loadDoctors();
+  if(id === 'section-history') loadPatientHistory();
+  if(id === 'section-appointments') loadAppointments();
+  if(id === 'section-medicines') renderPatientMedGrid();
+}
+
+function showDocSection(id) {
+  document.querySelectorAll('[id^="dsection-"]').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  const map = {'dsection-home':'dsb-home','dsection-dara':'dsb-dara','dsection-nova':'dsb-nova','dsection-patients':'dsb-patients','dsection-dreports':'dsb-reports','dsection-med':'dsb-medicines'};
+  if(map[id]) document.getElementById(map[id])?.classList.add('active');
+  if(id === 'dsection-patients') loadPatientCases();
+}
+
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+function setLoginRole(r){loginRole=r;document.getElementById('login-patient-btn').classList.toggle('active',r==='patient');document.getElementById('login-doctor-btn').classList.toggle('active',r==='doctor');}
+function setRegRole(r){regRole=r;document.getElementById('reg-patient-btn').classList.toggle('active',r==='patient');document.getElementById('reg-doctor-btn').classList.toggle('active',r==='doctor');document.getElementById('reg-spec-group').style.display=r==='doctor'?'block':'none';}
+
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  if(!email||!pass){errEl.textContent='Please fill all fields.';errEl.style.display='block';return;}
+  const users = JSON.parse(localStorage.getItem('mc_users')||'[]');
+  const user = users.find(u=>u.email===email&&u.password===pass&&u.role===loginRole);
+  if(!user){errEl.textContent='Invalid credentials or wrong role selected.';errEl.style.display='block';return;}
+  currentUser = user;
+  localStorage.setItem('mc_current',JSON.stringify(user));
+  loginSuccess(user);
+}
+
+function doRegister() {
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pass=document.getElementById('reg-password').value;
+  const age=document.getElementById('reg-age').value;
+  const gender=document.getElementById('reg-gender').value;
+  const spec=document.getElementById('reg-spec').value.trim();
+  const errEl=document.getElementById('reg-error');
+  errEl.style.display='none';
+  if(!name||!email||!pass||!age||!gender){errEl.textContent='Please fill all fields.';errEl.style.display='block';return;}
+  if(pass.length<6){errEl.textContent='Password must be at least 6 characters.';errEl.style.display='block';return;}
+  const users=JSON.parse(localStorage.getItem('mc_users')||'[]');
+  if(users.find(u=>u.email===email)){errEl.textContent='Email already registered.';errEl.style.display='block';return;}
+  const user={id:Date.now(),name,email,password:pass,role:regRole,age,gender,spec:spec||'',history:[],appointments:[]};
+  users.push(user);
+  localStorage.setItem('mc_users',JSON.stringify(users));
+  currentUser=user;
+  localStorage.setItem('mc_current',JSON.stringify(user));
+  loginSuccess(user);
+}
+
+function loginSuccess(user) {
+  showToast('Welcome, '+user.name+'! 👋','success');
+  if(user.role==='patient'){
+    document.getElementById('patient-name-nav').textContent=user.name;
+    document.getElementById('patient-greeting-name').textContent=user.name.split(' ')[0];
+    document.getElementById('patient-avatar').textContent=user.name[0].toUpperCase();
+    const hour = new Date().getHours();
+    const greeting = hour<12?'Good morning':'hour<17?'Good afternoon':'Good evening';
+    document.getElementById('patient-greeting-sub').textContent=`Here's your health overview for today, ${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}`;
+    showPage('page-patient');
+    showSection('section-home');
+    loadDailyTip();
+    renderHomeMedGrid();
+  } else {
+    document.getElementById('doctor-name-nav').textContent=user.name;
+    document.getElementById('doctor-greeting-name').textContent=user.name.split(' ')[0];
+    document.getElementById('doctor-avatar').textContent=user.name[0].toUpperCase();
+    showPage('page-doctor');
+    showDocSection('dsection-home');
+    updateDocCasesCount();
+  }
+}
+
+function doLogout(){currentUser=null;localStorage.removeItem('mc_current');showPage('page-landing');showToast('Logged out successfully');}
+function demoMode(){
+  currentUser={id:999,name:'Demo Patient',email:'demo@medicure.ai',role:'patient',age:30,gender:'Male',history:[],appointments:[]};
+  document.getElementById('patient-name-nav').textContent='Demo Patient';
+  document.getElementById('patient-greeting-name').textContent='Demo';
+  document.getElementById('patient-avatar').textContent='D';
+  showPage('page-patient');showSection('section-home');loadDailyTip();renderHomeMedGrid();
+  showToast('Demo mode activated! 🎬','success');
+}
+
+window.onload = function() {
+  const saved = localStorage.getItem('mc_current');
+  if(saved){currentUser=JSON.parse(saved);loginSuccess(currentUser);}
+  renderLandingMeds();
+  setTodayAsMinDate();
+};
+
+function setTodayAsMinDate(){
+  const today = new Date().toISOString().split('T')[0];
+  const d1 = document.getElementById('appt-date');
+  const d2 = document.getElementById('landing-appt-date');
+  if(d1) d1.min = today;
+  if(d2) d2.value = today;
+}
+
+function updateDocCasesCount(){
+  const cases=JSON.parse(localStorage.getItem('mc_cases')||'[]');
+  const el=document.getElementById('doc-cases-count');
+  if(el) el.textContent=cases.length;
+}
+
+// ═══════════════════════════════════════════
+// MEDICINES RENDERING
+// ═══════════════════════════════════════════
+function renderLandingMeds(){
+  const track1 = document.getElementById('med-track-1');
+  const track2 = document.getElementById('med-track-2');
+  if(!track1) return;
+  const first18 = ALL_MEDICINES.slice(0,18);
+  const last17 = ALL_MEDICINES.slice(18);
+  const buildTrack = (meds) => [...meds,...meds].map(m=>`
+    <div class="med-pill-card" onclick="showPage('page-register')">
+      <span class="med-pill-img">${m.emoji}</span>
+      <div class="med-pill-name">${m.name}</div>
+      <div class="med-pill-cat">${m.cat}</div>
+    </div>`).join('');
+  track1.innerHTML = buildTrack(first18);
+  track2.innerHTML = buildTrack(last17);
+}
+
+function renderHomeMedGrid(){
+  const el = document.getElementById('home-med-grid');
+  if(!el) return;
+  el.innerHTML = ALL_MEDICINES.slice(0,12).map(m=>`
+    <div class="med-home-card" onclick="showSection('section-medicines');setTimeout(()=>{document.getElementById('med-input').value='${m.name}';searchMedicine();},100)">
+      <div class="mhc-img">${m.emoji}</div>
+      <div class="mhc-name">${m.name}</div>
+      <div class="mhc-cat">${m.cat}</div>
+    </div>`).join('');
+}
+
+function renderPatientMedGrid(){
+  const el = document.getElementById('patient-med-grid');
+  if(!el) return;
+  el.innerHTML = ALL_MEDICINES.map(m=>`
+    <div class="med-home-card" onclick="document.getElementById('med-input').value='${m.name}';searchMedicine();document.getElementById('patient-med-grid').closest('.section-card').scrollIntoView()">
+      <div class="mhc-img">${m.emoji}</div>
+      <div class="mhc-name">${m.name}</div>
+      <div class="mhc-cat">${m.cat}</div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// APPOINTMENT (interactive)
+// ═══════════════════════════════════════════
+function selectSlot(btn){
+  document.querySelectorAll('.slot-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedSlot = btn.textContent;
+}
+
+function bookDoctor(name, phone){
+  currentBookingDoctor = name;
+  document.getElementById('appt-doc-name').textContent = `Booking with ${name}`;
+  document.getElementById('appt-modal').classList.add('show');
+  document.getElementById('appt-date').value = new Date().toISOString().split('T')[0];
+}
+
+function closeApptModal(){document.getElementById('appt-modal').classList.remove('show');}
+
+function confirmAppointment(){
+  const date = document.getElementById('appt-date').value;
+  const reason = document.getElementById('appt-reason').value;
+  if(!date){showToast('Please select a date','warning');return;}
+  const appt = {id:Date.now(), doctor:currentBookingDoctor, date, slot:selectedSlot, reason:reason||'General consultation', status:'Confirmed'};
+  if(currentUser){
+    const users=JSON.parse(localStorage.getItem('mc_users')||'[]');
+    const idx=users.findIndex(u=>u.id===currentUser.id);
+    if(idx>=0){if(!users[idx].appointments)users[idx].appointments=[];users[idx].appointments.push(appt);localStorage.setItem('mc_users',JSON.stringify(users));}
+  }
+  closeApptModal();
+  showToast(`Appointment confirmed with ${currentBookingDoctor} on ${new Date(date).toLocaleDateString('en-IN')} at ${selectedSlot} ✅`,'success');
+}
+
+function loadAppointments(){
+  const el = document.getElementById('appointments-list');
+  if(!currentUser){el.innerHTML='<div class="empty-state"><div class="es-icon">📅</div><p>Login to see your appointments</p></div>';return;}
+  const users=JSON.parse(localStorage.getItem('mc_users')||'[]');
+  const user=users.find(u=>u.id===currentUser.id);
+  const appts=user?.appointments||[];
+  if(!appts.length){el.innerHTML='<div class="empty-state"><div class="es-icon">📅</div><p>No appointments yet. Find a doctor and book one!</p><button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showSection(\'section-doctors\')">Browse Doctors</button></div>';return;}
+  el.innerHTML = appts.reverse().map(a=>`
+    <div class="section-card" style="margin-bottom:.8rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;">
+        <div>
+          <div style="font-weight:800;font-size:.95rem;">${a.doctor}</div>
+          <div style="font-size:.8rem;color:var(--text-muted);margin-top:.2rem;">📅 ${new Date(a.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})} &nbsp;•&nbsp; 🕐 ${a.slot}</div>
+          <div style="font-size:.8rem;color:var(--text-muted);margin-top:.15rem;">📝 ${a.reason}</div>
+        </div>
+        <span class="badge badge-normal">${a.status}</span>
+      </div>
+    </div>`).join('');
+}
+
+function landingBookAppt(){
+  const name=document.getElementById('landing-appt-name').value.trim();
+  if(!name){showToast('Please enter your name','warning');return;}
+  showToast(`Appointment request received for ${name}! We'll confirm within 2 hours. 📞`,'success');
+}
+
+// ═══════════════════════════════════════════
+// CLAUDE API
+// ═══════════════════════════════════════════
+async function callClaude(systemPrompt, userMessage, maxTokens=800) {
+  const res = await fetch(CLAUDE_API, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system:systemPrompt,messages:[{role:'user',content:userMessage}]})
+  });
+  const data = await res.json();
+  if(data.content && data.content[0]) return data.content[0].text;
+  throw new Error('API error: '+JSON.stringify(data));
+}
+
+async function callClaudeConvo(systemPrompt, messages, maxTokens=600) {
+  const res = await fetch(CLAUDE_API, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system:systemPrompt,messages})
+  });
+  const data = await res.json();
+  if(data.content && data.content[0]) return data.content[0].text;
+  throw new Error('API error');
+}
+
+// ═══════════════════════════════════════════
+// ARIA CHAT
+// ═══════════════════════════════════════════
+const ARIA_SYSTEM = `You are ARIA — Automated Reception & Intake Agent for MEDICURE hospital AI platform.
+You are a caring, conversational AI nurse who collects patient symptoms.
+RULES:
+- Ask one question at a time, like a real nurse
+- Support Hindi and English both
+- Ask about: symptom, duration, severity (1-10), location, triggers, past history, current medicines
+- After 4-5 exchanges, generate a structured summary with:
+  [SUMMARY]
+  Chief Complaint: ...
+  Duration: ...
+  Severity: X/10
+  History: ...
+  Urgency: CRITICAL/HIGH/MEDIUM/NORMAL
+  [/SUMMARY]
+- BIAS ENGINE: If patient is female + mentions chest/jaw/arm pain, add: ⚠️ BIAS FLAG: Atypical cardiac presentation detected. AI historically underdiagnoses MI in women by 50%. (AHA 2022)
+- If patient is female + fatigue + joint pain, add: ⚠️ BIAS FLAG: Autoimmune underdiagnosis risk. Average 7-year delay in women. (NIH)
+- Keep responses SHORT (2-4 sentences max)
+- Be warm, reassuring, professional`;
+
+async function sendARIA() {
+  const input = document.getElementById('aria-input');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+  appendMessage('user', msg, 'aria-messages');
+  ariaMessages.push({role:'user',content:msg});
+  const typing = appendTyping('aria-messages');
+  try {
+    const reply = await callClaudeConvo(ARIA_SYSTEM, ariaMessages);
+    typing.remove();
+    ariaMessages.push({role:'assistant',content:reply});
+    const biasFlag = extractBiasFlag(reply);
+    const cleanReply = reply.replace(/⚠️ BIAS FLAG:.*?(\n|$)/g,'').trim();
+    appendMessage('bot', cleanReply, 'aria-messages');
+    if(biasFlag) appendBiasFlag(biasFlag, 'aria-messages');
+    if(reply.includes('[SUMMARY]')) saveARIAReport(reply);
+  } catch(e) {
+    typing.remove();
+    appendMessage('bot','Sorry, I had trouble connecting. Please check your internet and try again.','aria-messages');
+  }
+}
+
+function extractBiasFlag(text){const m=text.match(/⚠️ BIAS FLAG: (.*?)(\n|$)/);return m?m[1]:null;}
+
+function appendMessage(type, text, containerId) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = `msg ${type}`;
+  div.innerHTML = `<div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div><div class="msg-time">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function appendBiasFlag(text, containerId) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `<div class="bias-flag">⚠️ <div><strong>Bias Alert:</strong> ${text}</div></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function appendTyping(containerId) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function saveARIAReport(reply) {
+  if(!currentUser) return;
+  const users = JSON.parse(localStorage.getItem('mc_users')||'[]');
+  const idx = users.findIndex(u=>u.id===currentUser.id);
+  if(idx>=0){if(!users[idx].history)users[idx].history=[];users[idx].history.push({date:new Date().toISOString(),type:'ARIA Intake Report',content:reply});localStorage.setItem('mc_users',JSON.stringify(users));}
+  const cases = JSON.parse(localStorage.getItem('mc_cases')||'[]');
+  cases.push({id:Date.now(),patient:currentUser.name,age:currentUser.age,gender:currentUser.gender,date:new Date().toISOString(),report:reply,status:'Pending'});
+  localStorage.setItem('mc_cases',JSON.stringify(cases));
+  showToast('ARIA report sent to doctor! ✅','success');
+}
+
+// ═══════════════════════════════════════════
+// MEDICINE SEARCH
+// ═══════════════════════════════════════════
+const MED_SYSTEM = `You are a medical information assistant. When given a medicine name, return ONLY a JSON object (no markdown, no explanation) in this format:
+{"name":"","generic":"","uses":"","dosage":"","sideEffects":"","precautions":"","category":"","interactions":""}
+Keep each field under 70 words. Be accurate and clinical.`;
+
+async function searchMedicine(inputId='med-input', outputId='med-results') {
+  const input = document.getElementById(inputId||'med-input');
+  const query = input.value.trim();
+  if(!query){showToast('Please enter a medicine name','warning');return;}
+  const output = document.getElementById(outputId||'med-results');
+  output.innerHTML = '<div style="text-align:center;padding:2rem"><div class="loading-spinner"></div><p style="color:var(--text-muted);margin-top:.5rem;font-size:.85rem">Searching medicine database...</p></div>';
+  try {
+    const raw = await callClaude(MED_SYSTEM, `Medicine: ${query}`, 600);
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const med = JSON.parse(clean);
+    const medEmoji = ALL_MEDICINES.find(m=>m.name.toLowerCase()===med.name.toLowerCase())?.emoji || '💊';
+    output.innerHTML = `
+      <div class="medicine-result">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem;">
+          <span style="font-size:2.2rem;">${medEmoji}</span>
+          <div>
+            <h3 style="margin:0">💊 ${med.name}</h3>
+            <div style="font-size:.78rem;color:var(--text-muted);">Generic: ${med.generic} &nbsp;•&nbsp; Category: ${med.category}</div>
+          </div>
+        </div>
+        <div class="med-grid">
+          <div class="med-info-card"><div class="med-label">✅ Uses</div>${med.uses}</div>
+          <div class="med-info-card"><div class="med-label">💉 Dosage</div>${med.dosage}</div>
+          <div class="med-info-card"><div class="med-label">⚠️ Side Effects</div>${med.sideEffects}</div>
+          <div class="med-info-card" style="background:#fff7ed;"><div class="med-label" style="color:#c2410c">🚫 Precautions</div>${med.precautions}</div>
+          <div class="med-info-card" style="background:#eff6ff;"><div class="med-label" style="color:#2563eb">🔗 Interactions</div>${med.interactions||'Consult your doctor'}</div>
+        </div>
+      </div>`;
+  } catch(e) {
+    output.innerHTML = '<div style="color:var(--red);padding:1rem;background:#fee2e2;border-radius:12px;">Could not fetch medicine info. Please check your API key.</div>';
+  }
+}
+
+function quickMed(name){document.getElementById('med-input').value=name;searchMedicine();}
+function searchDocMedicine(){searchMedicine('doc-med-input','doc-med-results');}
+
+// ═══════════════════════════════════════════
+// DOCTORS
+// ═══════════════════════════════════════════
+const MOCK_DOCTORS = [
+  {name:'Dr. Priya Sharma',spec:'General Physician',exp:'12 years',rating:4.8,available:true,distance:0.3,phone:'9876543210',icon:'👩‍⚕️',bio:'MBBS, MD. Expert in general medicine & preventive health.'},
+  {name:'Dr. Rajesh Kumar',spec:'Cardiologist',exp:'18 years',rating:4.9,available:true,distance:0.8,phone:'9876543211',icon:'👨‍⚕️',bio:'DM Cardiology. Specializes in interventional cardiology.'},
+  {name:'Dr. Anita Singh',spec:'Dermatologist',exp:'8 years',rating:4.6,available:false,distance:1.1,phone:'9876543212',icon:'👩‍⚕️',bio:'MD Dermatology. Expert in skin disorders & cosmetic procedures.'},
+  {name:'Dr. Vikram Patel',spec:'Orthopedic',exp:'15 years',rating:4.7,available:true,distance:1.4,phone:'9876543213',icon:'👨‍⚕️',bio:'MS Orthopedics. Joint replacement & sports injury specialist.'},
+  {name:'Dr. Meera Nair',spec:'Pediatrician',exp:'10 years',rating:4.9,available:true,distance:0.6,phone:'9876543214',icon:'👩‍⚕️',bio:'DCH, MD Pediatrics. Specialist in neonatal & child health.'},
+  {name:'Dr. Suresh Rao',spec:'General Physician',exp:'20 years',rating:4.5,available:true,distance:2.0,phone:'9876543215',icon:'👨‍⚕️',bio:'MBBS, DNB. 20 years of comprehensive family medicine experience.'},
+  {name:'Dr. Kavita Joshi',spec:'Cardiologist',exp:'14 years',rating:4.8,available:false,distance:2.5,phone:'9876543216',icon:'👩‍⚕️',bio:'DM Cardiology, FACC. Heart failure & echocardiography expert.'},
+  {name:'Dr. Arjun Mehta',spec:'Orthopedic',exp:'9 years',rating:4.4,available:true,distance:1.8,phone:'9876543217',icon:'👨‍⚕️',bio:'MS Orthopedics. Minimally invasive spine & joint surgery.'},
+  {name:'Dr. Deepa Reddy',spec:'Gynecologist',exp:'13 years',rating:4.7,available:true,distance:1.2,phone:'9876543218',icon:'👩‍⚕️',bio:'MD OBG. High-risk pregnancy & laparoscopic gynecology expert.'},
+  {name:'Dr. Sanjay Gupta',spec:'Dermatologist',exp:'11 years',rating:4.6,available:true,distance:2.1,phone:'9876543219',icon:'👨‍⚕️',bio:'MD Dermatology. Skin allergy & advanced dermatology specialist.'},
+];
+
+function loadDoctors(filter='All') {
+  const grid = document.getElementById('doctors-grid');
+  if(!grid) return;
+  const filtered = filter==='All' ? MOCK_DOCTORS : MOCK_DOCTORS.filter(d=>d.spec===filter);
+  grid.innerHTML = filtered.map(d=>`
+    <div class="doctor-card">
+      <div class="doc-avatar">${d.icon}</div>
+      <div style="flex:1">
+        <div class="doc-name">${d.name}</div>
+        <div class="doc-spec">${d.spec}</div>
+        <div class="doc-info">${d.exp} • ${d.bio}</div>
+        <div class="doc-rating">★ ${d.rating} <span class="distance-badge">📍 ${d.distance} km</span></div>
+        <div style="margin-top:.5rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+          <span class="doc-badge ${d.available?'':'unavailable'}">${d.available?'✅ Available':'❌ Unavailable'}</span>
+        </div>
+        ${d.available?`<button class="btn btn-primary btn-sm" style="margin-top:.7rem;" onclick="bookDoctor('${d.name}','${d.phone}')">📅 Book Appointment</button>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function filterDocs(f){
+  currentFilter=f;
+  document.querySelectorAll('.doctor-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f||(f==='All'&&b.textContent.trim()==='All')));
+  loadDoctors(f);
+}
+
+function getLocation(){
+  if(!navigator.geolocation){showToast('Geolocation not supported','warning');return;}
+  navigator.geolocation.getCurrentPosition(pos=>{
+    document.getElementById('location-status').textContent=`📍 Location: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+    showToast('Location updated! Showing nearby doctors','success');
+    loadDoctors(currentFilter);
+  },()=>{document.getElementById('location-status').textContent='Location denied — showing all doctors';showToast('Location denied — showing all doctors','warning');});
+}
+
+// ═══════════════════════════════════════════
+// DARA ANALYSIS
+// ═══════════════════════════════════════════
+const DARA_SYSTEM = `You are DARA — Doctor Advisory & Response Agent for MEDICURE.
+Given patient details, provide a clinical analysis. Respond ONLY in JSON format:
+{
+  "summary": "2-sentence patient overview",
+  "urgencyScore": "CRITICAL/HIGH/MEDIUM/LOW",
+  "diagnoses": [
+    {"name":"","confidence":85,"notes":""},
+    {"name":"","confidence":65,"notes":""},
+    {"name":"","confidence":40,"notes":""}
+  ],
+  "patterns": "Key patterns found in history (1-2 sentences)",
+  "unexploredTreatments": "Treatments not yet tried (1 sentence)",
+  "safeMedicines": ["",""],
+  "avoidMedicines": ["",""],
+  "dietAdvice": "Brief diet recommendation",
+  "biasFlags": ["List any demographic bias risk if applicable"],
+  "nextSteps": "Recommended immediate next steps",
+  "followUpPlan": "Follow-up schedule recommendation"
+}
+Use only JSON. No markdown. Be clinically accurate.`;
+
+async function runDARA() {
+  const name=document.getElementById('dara-name').value.trim();
+  const age=document.getElementById('dara-age').value;
+  const gender=document.getElementById('dara-gender').value;
+  const complaint=document.getElementById('dara-complaint').value.trim();
+  const history=document.getElementById('dara-history').value.trim();
+  const vitals=document.getElementById('dara-vitals').value.trim();
+  if(!name||!complaint){showToast('Please fill patient name and complaint','warning');return;}
+  const btn=document.getElementById('dara-btn');
+  btn.innerHTML='<div class="loading-spinner" style="display:inline-block;margin-right:.5rem;border-top-color:#fff;border-color:rgba(255,255,255,.3)"></div> Analysing...';
+  btn.disabled=true;
+  const prompt=`Patient: ${name}, ${age}yr ${gender}\nChief Complaint: ${complaint}\nMedical History: ${history||'None provided'}\nVitals: ${vitals||'Not provided'}`;
+  try {
+    const raw = await callClaude(DARA_SYSTEM, prompt, 900);
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const d = JSON.parse(clean);
+    const urgencyColor={'CRITICAL':'badge-critical','HIGH':'badge-high','MEDIUM':'badge-medium','LOW':'badge-normal'}[d.urgencyScore]||'badge-normal';
+    document.getElementById('dara-output').innerHTML = `
+      <div class="dara-wrap">
+        <div class="dara-header">
+          <div class="doc-avatar" style="background:linear-gradient(135deg,#2563eb,#7c3aed)">👤</div>
+          <div class="dara-patient-info">
+            <h3>${name} — ${age}yr ${gender} <span class="badge ${urgencyColor}" style="margin-left:.5rem">⚡ ${d.urgencyScore}</span></h3>
+            <p>${d.summary}</p>
+          </div>
+        </div>
+        <div class="analysis-section">
+          <div class="analysis-title">🎯 Top 3 Differential Diagnoses</div>
+          ${d.diagnoses.map(diag=>`
+            <div class="diagnosis-card">
+              <div class="diag-name">${diag.name}</div>
+              <div class="confidence-bar"><div class="bar"><div class="bar-fill" style="width:${diag.confidence}%"></div></div>${diag.confidence}%</div>
+            </div>
+            <div style="font-size:.78rem;color:var(--text-muted);padding:.2rem .5rem .6rem;">${diag.notes}</div>
+          `).join('')}
+        </div>
+        ${d.biasFlags&&d.biasFlags.length&&d.biasFlags[0]?`
+        <div class="bias-flag" style="margin-bottom:1.2rem;">⚠️ <div><strong>Bias Flags:</strong><br>${d.biasFlags.join('<br>')}</div></div>`:''}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="med-info-card"><div class="med-label">🔍 Patterns Found</div>${d.patterns}</div>
+          <div class="med-info-card"><div class="med-label">💡 Unexplored Treatments</div>${d.unexploredTreatments}</div>
+          <div class="med-info-card"><div class="med-label">✅ Safe Medicines</div>${d.safeMedicines.join(', ')}</div>
+          <div class="med-info-card" style="background:#fee2e2;"><div class="med-label" style="color:#dc2626;">⛔ Avoid</div>${d.avoidMedicines.join(', ')}</div>
+          <div class="med-info-card"><div class="med-label">🥗 Diet Advice</div>${d.dietAdvice}</div>
+          <div class="med-info-card" style="background:#eff6ff;"><div class="med-label" style="color:#2563eb;">📋 Next Steps</div>${d.nextSteps}</div>
+          <div class="med-info-card" style="background:#f5f3ff;grid-column:span 2"><div class="med-label" style="color:#7c3aed;">📅 Follow-Up Plan</div>${d.followUpPlan||'As per clinical judgment'}</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="margin-top:1rem;" onclick="showDocSection('dsection-dreports');document.getElementById('rpt-name').value='${name}';document.getElementById('rpt-age-gender').value='${age}yr, ${gender}';document.getElementById('rpt-diagnosis').value='${complaint}';">📊 Generate Full Report →</button>
+      </div>`;
+  } catch(e) {
+    document.getElementById('dara-output').innerHTML='<div style="color:var(--red);padding:1rem;background:#fee2e2;border-radius:12px;">Analysis failed. Please check API key.</div>';
+  }
+  btn.innerHTML='🧠 Analyse with DARA';btn.disabled=false;
+}
+
+// ═══════════════════════════════════════════
+// NOVA VOICE TO SOAP
+// ═══════════════════════════════════════════
+const NOVA_SYSTEM = `You are NOVA — Note & Voice Auto-documentation Agent for MEDICURE.
+Convert the given consultation notes into a SOAP format. Respond ONLY in JSON:
+{
+  "subjective": "What the patient reported (symptoms, complaints)",
+  "objective": "Vitals and observable findings mentioned",
+  "assessment": "Clinical assessment and diagnosis",
+  "plan": "Treatment plan, medications, follow-up"
+}
+Be concise but clinically complete. JSON only, no markdown.`;
+
+function toggleRecording(){if(!isRecording)startRecording();else stopRecording();}
+
+function startRecording(){
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){showToast('Voice not supported. Please type your notes below.','warning');return;}
+  const SpeechRec=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SpeechRec();
+  recognition.continuous=true;recognition.interimResults=true;recognition.lang='en-IN';
+  recognition.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript+' ';document.getElementById('nova-text-input').value=t;};
+  recognition.start();isRecording=true;
+  document.getElementById('record-btn').classList.add('recording');
+  document.getElementById('record-btn').textContent='⏹️';
+  document.getElementById('nova-status').textContent='🔴 Recording... Speak your consultation notes';
+  recordSeconds=0;recordTimer=setInterval(()=>{recordSeconds++;document.getElementById('nova-timer').textContent=`${recordSeconds}s`;},1000);
+}
+
+function stopRecording(){
+  if(recognition)recognition.stop();clearInterval(recordTimer);isRecording=false;
+  document.getElementById('record-btn').classList.remove('recording');
+  document.getElementById('record-btn').textContent='🎙️';
+  document.getElementById('nova-status').textContent='Recording stopped. Click "Generate SOAP Note" below.';
+  document.getElementById('nova-timer').textContent='';
+}
+
+async function generateSOAP(){
+  const text=document.getElementById('nova-text-input').value.trim();
+  if(!text){showToast('Please record or type your consultation notes first','warning');return;}
+  document.getElementById('soap-output').innerHTML='<div style="text-align:center;padding:2rem"><div class="loading-spinner"></div><p style="color:var(--text-muted);margin-top:.5rem;font-size:.85rem">Generating SOAP note...</p></div>';
+  try {
+    const raw=await callClaude(NOVA_SYSTEM,`Consultation notes: ${text}`,600);
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const soap=JSON.parse(clean);
+    document.getElementById('soap-output').innerHTML=`
+      <div class="soap-output">
+        <h3 style="margin-bottom:1rem;font-size:.95rem;font-weight:800;font-family:'Playfair Display',serif;">📋 SOAP Note — ${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</h3>
+        <div class="soap-section"><div class="soap-label">S — Subjective</div><div class="soap-text">${soap.subjective}</div></div>
+        <div class="soap-section"><div class="soap-label">O — Objective</div><div class="soap-text">${soap.objective}</div></div>
+        <div class="soap-section"><div class="soap-label">A — Assessment</div><div class="soap-text">${soap.assessment}</div></div>
+        <div class="soap-section"><div class="soap-label">P — Plan</div><div class="soap-text">${soap.plan}</div></div>
+        <button class="btn btn-primary btn-sm" style="margin-top:.5rem;" onclick="approveSOAP()">✅ Approve & Save to Record</button>
+      </div>`;
+  } catch(e){document.getElementById('soap-output').innerHTML='<div style="color:var(--red);padding:1rem;background:#fee2e2;border-radius:12px;">SOAP generation failed. Please check API key.</div>';}
+}
+
+function approveSOAP(){showToast('SOAP note approved and saved to patient record! ✅','success');}
+
+// ═══════════════════════════════════════════
+// AI HEALTH REPORT (PATIENT)
+// ═══════════════════════════════════════════
+const HEALTH_REPORT_SYSTEM = `You are a medical AI health report generator for MEDICURE. 
+Given a patient's health concerns, generate a comprehensive health report in JSON format:
+{
+  "summary": "Executive health summary (2-3 sentences)",
+  "riskAssessment": "Overall health risk level: LOW/MODERATE/HIGH with explanation",
+  "possibleConditions": ["condition1", "condition2", "condition3"],
+  "immediateActions": ["action1", "action2"],
+  "lifestyleRecommendations": ["rec1", "rec2", "rec3", "rec4"],
+  "medicineInteractions": "Any notable interactions if medications mentioned, else 'None identified'",
+  "dietPlan": "Brief diet recommendation",
+  "exercisePlan": "Exercise recommendation considering health status",
+  "followUpSchedule": "Recommended follow-up timeline",
+  "warningSigns": ["sign1", "sign2", "sign3"],
+  "disclaimer": "Brief medical disclaimer"
+}
+Return ONLY valid JSON. No markdown.`;
+
+async function generateHealthReport(){
+  const concerns=document.getElementById('report-concerns').value.trim();
+  const conditions=document.getElementById('report-conditions').value.trim();
+  const medications=document.getElementById('report-medications').value.trim();
+  if(!concerns){showToast('Please describe your health concerns','warning');return;}
+  const btn=document.getElementById('report-btn');
+  btn.innerHTML='<div class="loading-spinner" style="display:inline-block;margin-right:.5rem;border-top-color:#fff;border-color:rgba(255,255,255,.3)"></div> Generating Report...';
+  btn.disabled=true;
+  const prompt=`Patient Health Concerns: ${concerns}\nKnown Conditions: ${conditions||'None mentioned'}\nCurrent Medications: ${medications||'None mentioned'}\nPatient: ${currentUser?.age||'Unknown'}yr ${currentUser?.gender||''}`;
+  try {
+    const raw=await callClaude(HEALTH_REPORT_SYSTEM,prompt,1000);
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const r=JSON.parse(clean);
+    const riskColor={'LOW':'badge-normal','MODERATE':'badge-medium','HIGH':'badge-critical'}[r.riskAssessment.split(':')[0].trim()]||'badge-medium';
+    document.getElementById('report-output').innerHTML=`
+      <div class="section-card" style="border-color:var(--green)">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
+          <span style="font-size:2rem;">📊</span>
+          <div>
+            <div style="font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">AI Health Report — ${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</div>
+            <div style="font-size:.78rem;color:var(--text-muted);">${currentUser?.name||'Patient'} · Generated by MEDICURE AI</div>
+          </div>
+          <span class="badge ${riskColor}" style="margin-left:auto;">${r.riskAssessment.split(':')[0].trim()} RISK</span>
+        </div>
+        <div class="report-section-title">📝 Executive Summary</div>
+        <p style="font-size:.87rem;line-height:1.7;color:var(--text);background:var(--green-pale);padding:.9rem;border-radius:10px;">${r.summary}</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+          <div class="med-info-card"><div class="med-label">🔎 Possible Conditions</div>${r.possibleConditions.map(c=>`• ${c}`).join('<br>')}</div>
+          <div class="med-info-card" style="background:#fff7ed;"><div class="med-label" style="color:#c2410c;">⚡ Immediate Actions</div>${r.immediateActions.map(a=>`• ${a}`).join('<br>')}</div>
+          <div class="med-info-card"><div class="med-label">🥗 Diet Plan</div>${r.dietPlan}</div>
+          <div class="med-info-card"><div class="med-label">🏃 Exercise Plan</div>${r.exercisePlan}</div>
+          <div class="med-info-card" style="background:#eff6ff;"><div class="med-label" style="color:#2563eb;">💊 Medicine Interactions</div>${r.medicineInteractions}</div>
+          <div class="med-info-card"><div class="med-label">📅 Follow-Up Schedule</div>${r.followUpSchedule}</div>
+        </div>
+        <div class="med-info-card" style="margin-top:1rem;">
+          <div class="med-label">✅ Lifestyle Recommendations</div>
+          ${r.lifestyleRecommendations.map((rec,i)=>`<div style="margin-bottom:.3rem">${i+1}. ${rec}</div>`).join('')}
+        </div>
+        <div class="med-info-card" style="margin-top:1rem;background:#fee2e2;">
+          <div class="med-label" style="color:#dc2626;">⚠️ Warning Signs to Watch</div>
+          ${r.warningSigns.map(s=>`• ${s}`).join('<br>')}
+        </div>
+        <div style="margin-top:1rem;font-size:.75rem;color:var(--text-muted);padding:.7rem;background:var(--bg);border-radius:9px;border:1px solid var(--border);">⚕️ ${r.disclaimer}</div>
+        <button class="btn btn-primary btn-sm" style="margin-top:1rem;" onclick="showSection('section-doctors')">📅 Book Doctor Appointment →</button>
+      </div>`;
+  } catch(e){document.getElementById('report-output').innerHTML='<div style="color:var(--red);padding:1rem;background:#fee2e2;border-radius:12px;">Report generation failed. Please check API key.</div>';}
+  btn.innerHTML='🤖 Generate AI Health Report';btn.disabled=false;
+}
+
+// ═══════════════════════════════════════════
+// DOCTOR PATIENT REPORT GENERATOR
+// ═══════════════════════════════════════════
+const DOC_REPORT_SYSTEM = `You are a senior medical report writer for MEDICURE. 
+Generate a comprehensive medical report for a patient in JSON:
+{
+  "reportTitle": "Brief report title",
+  "clinicalSummary": "Detailed clinical summary (3-4 sentences)",
+  "diagnoses": [{"primary":"","icd":"","notes":""},{"secondary":"","notes":""}],
+  "labAnalysis": "Analysis of provided lab results and vitals",
+  "treatmentAssessment": "Assessment of current treatment adequacy",
+  "recommendations": ["rec1","rec2","rec3","rec4","rec5"],
+  "medicationReview": "Review of current medications with any adjustments suggested",
+  "prognosisNotes": "Prognosis and expected outcome",
+  "patientEducation": ["education point 1","education point 2","education point 3"],
+  "followUpPlan": "Detailed follow-up plan",
+  "referrals": "Any specialist referrals recommended",
+  "riskFactors": ["factor1","factor2"],
+  "qualityIndicators": "Quality of care assessment note"
+}
+Return ONLY valid JSON. Be clinically precise and comprehensive.`;
+
+async function generateDoctorReport(){
+  const name=document.getElementById('rpt-name').value.trim();
+  const ageGender=document.getElementById('rpt-age-gender').value.trim();
+  const diagnosis=document.getElementById('rpt-diagnosis').value.trim();
+  const labs=document.getElementById('rpt-labs').value.trim();
+  const treatment=document.getElementById('rpt-treatment').value.trim();
+  if(!name||!diagnosis){showToast('Please fill patient name and diagnosis','warning');return;}
+  const btn=document.getElementById('drpt-btn');
+  btn.innerHTML='<div class="loading-spinner" style="display:inline-block;margin-right:.5rem;border-top-color:#fff;border-color:rgba(255,255,255,.3)"></div> Generating Report...';
+  btn.disabled=true;
+  const prompt=`Patient: ${name}, ${ageGender}\nDiagnosis: ${diagnosis}\nLab Results/Vitals: ${labs||'Not provided'}\nCurrent Treatment: ${treatment||'Not provided'}`;
+  try {
+    const raw=await callClaude(DOC_REPORT_SYSTEM,prompt,1200);
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const r=JSON.parse(clean);
+    document.getElementById('doctor-report-output').innerHTML=`
+      <div class="section-card">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
+          <span style="font-size:2rem;">📋</span>
+          <div>
+            <div style="font-weight:800;font-size:1rem;font-family:'Playfair Display',serif;">${r.reportTitle}</div>
+            <div style="font-size:.78rem;color:var(--text-muted);">${name} · ${ageGender} · ${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-left:auto;" onclick="window.print()">🖨️ Print</button>
+        </div>
+        <div class="report-section-title">🩺 Clinical Summary</div>
+        <p style="font-size:.87rem;line-height:1.7;background:var(--green-pale);padding:.9rem;border-radius:10px;">${r.clinicalSummary}</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+          <div class="med-info-card"><div class="med-label">🎯 Primary Diagnosis</div><strong>${r.diagnoses[0]?.primary||diagnosis}</strong>${r.diagnoses[0]?.icd?` <span style="font-size:.72rem;color:var(--text-muted)">(ICD: ${r.diagnoses[0].icd})</span>`:''}<br><span style="font-size:.8rem">${r.diagnoses[0]?.notes||''}</span></div>
+          <div class="med-info-card"><div class="med-label">🔬 Lab Analysis</div>${r.labAnalysis}</div>
+          <div class="med-info-card"><div class="med-label">💊 Medication Review</div>${r.medicationReview}</div>
+          <div class="med-info-card" style="background:#eff6ff;"><div class="med-label" style="color:#2563eb;">🔮 Prognosis</div>${r.prognosisNotes}</div>
+        </div>
+        <div class="med-info-card" style="margin-top:1rem;">
+          <div class="med-label">✅ Clinical Recommendations</div>
+          ${r.recommendations.map((rec,i)=>`<div style="margin-bottom:.4rem;padding:.3rem 0;border-bottom:1px solid var(--border);">${i+1}. ${rec}</div>`).join('')}
+        </div>
+        <div class="med-info-card" style="margin-top:1rem;background:#fff7ed;">
+          <div class="med-label" style="color:#c2410c;">👨‍👩‍👧 Patient Education Points</div>
+          ${r.patientEducation.map((p,i)=>`<div style="margin-bottom:.3rem">• ${p}</div>`).join('')}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+          <div class="med-info-card"><div class="med-label">📅 Follow-Up Plan</div>${r.followUpPlan}</div>
+          <div class="med-info-card"><div class="med-label">🔗 Referrals</div>${r.referrals}</div>
+          <div class="med-info-card" style="background:#fee2e2;"><div class="med-label" style="color:#dc2626;">⚠️ Risk Factors</div>${r.riskFactors?.map(f=>`• ${f}`).join('<br>')||'None identified'}</div>
+          <div class="med-info-card" style="background:var(--green-pale);"><div class="med-label">📊 Quality Indicators</div>${r.qualityIndicators||'Standard of care met'}</div>
+        </div>
+        <div style="margin-top:1rem;font-size:.75rem;color:var(--text-muted);padding:.7rem;background:var(--bg);border-radius:9px;border:1px solid var(--border);">This report was generated by MEDICURE AI for clinical support. All decisions remain the responsibility of the treating physician.</div>
+      </div>`;
+  } catch(e){document.getElementById('doctor-report-output').innerHTML='<div style="color:var(--red);padding:1rem;background:#fee2e2;border-radius:12px;">Report generation failed. Please check API key.</div>';}
+  btn.innerHTML='📊 Generate Comprehensive Report';btn.disabled=false;
+}
+
+// ═══════════════════════════════════════════
+// PATIENT CASES FOR DOCTORS
+// ═══════════════════════════════════════════
+function loadPatientCases(){
+  const el=document.getElementById('patient-cases-list');
+  const cases=JSON.parse(localStorage.getItem('mc_cases')||'[]');
+  if(!cases.length){el.innerHTML='<div class="empty-state"><div class="es-icon">👥</div><p>No patient cases yet. Patients using ARIA will appear here.</p></div>';return;}
+  el.innerHTML=cases.reverse().map(c=>`
+    <div class="patient-detail-card" onclick="togglePatientReport('${c.id}')">
+      <div class="patient-detail-header">
+        <div class="patient-avatar-lg">${c.patient[0]}</div>
+        <div>
+          <div class="patient-name">${c.patient}</div>
+          <div class="patient-meta">${c.age}yr, ${c.gender} &nbsp;•&nbsp; ${new Date(c.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+        </div>
+        <span class="badge badge-medium" style="margin-left:auto;">${c.status}</span>
+      </div>
+      <div class="patient-tags">
+        <span class="patient-tag pt-condition">ARIA Report</span>
+        <span class="patient-tag pt-medicine">Pending Review</span>
+      </div>
+      <div id="report-${c.id}" class="patient-report-section">
+        <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.5rem;">📋 ARIA Intake Report:</div>
+        <div style="font-size:.82rem;color:var(--text-muted);line-height:1.7;white-space:pre-wrap;">${c.report.substring(0,500)}${c.report.length>500?'...':''}</div>
+        <div style="display:flex;gap:.6rem;margin-top:.8rem;">
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();loadCaseInDARA('${c.id}')">🧠 Open in DARA</button>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();loadCaseInReport('${c.id}')">📊 Generate Report</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function togglePatientReport(id){
+  const el=document.getElementById('report-'+id);
+  if(el) el.classList.toggle('open');
+}
+
+function loadCaseInDARA(caseId){
+  const cases=JSON.parse(localStorage.getItem('mc_cases')||'[]');
+  const c=cases.find(x=>x.id==caseId);
+  if(!c) return;
+  showDocSection('dsection-dara');
+  document.getElementById('dara-name').value=c.patient;
+  document.getElementById('dara-age').value=c.age||'';
+  if(c.gender) document.getElementById('dara-gender').value=c.gender;
+  document.getElementById('dara-complaint').value='From ARIA intake report';
+  document.getElementById('dara-history').value=c.report.substring(0,400);
+  showToast('Case loaded in DARA. Click Analyse to begin.','success');
+}
+
+function loadCaseInReport(caseId){
+  const cases=JSON.parse(localStorage.getItem('mc_cases')||'[]');
+  const c=cases.find(x=>x.id==caseId);
+  if(!c) return;
+  showDocSection('dsection-dreports');
+  document.getElementById('rpt-name').value=c.patient;
+  document.getElementById('rpt-age-gender').value=`${c.age}yr, ${c.gender}`;
+  document.getElementById('rpt-diagnosis').value='From ARIA intake';
+  showToast('Case loaded. Fill additional details and generate report.','success');
+}
+
+// ═══════════════════════════════════════════
+// PATIENT HISTORY
+// ═══════════════════════════════════════════
+function loadPatientHistory(){
+  const el=document.getElementById('patient-history-list');
+  if(!currentUser){el.innerHTML='<div class="empty-state"><div class="es-icon">📋</div><p>Login to see your history</p></div>';return;}
+  const users=JSON.parse(localStorage.getItem('mc_users')||'[]');
+  const user=users.find(u=>u.id===currentUser.id);
+  const history=user?.history||[];
+  if(!history.length){el.innerHTML='<div class="empty-state"><div class="es-icon">📋</div><p>No history yet — Talk to ARIA to start your first consultation</p><button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showSection(\'section-aria\')">Talk to ARIA</button></div>';return;}
+  el.innerHTML=history.reverse().map(h=>`
+    <div class="history-item">
+      <div class="history-dot"></div>
+      <div class="history-info">
+        <div class="h-date">${new Date(h.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</div>
+        <div class="h-text">${h.type}</div>
+        ${h.content?`<div class="h-content">${h.content.substring(0,150)}${h.content.length>150?'...':''}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// DAILY TIP
+// ═══════════════════════════════════════════
+const TIPS = [
+  "💧 Drink 8 glasses of water daily. Hydration is the simplest preventive medicine.",
+  "🚶 A 30-minute walk daily reduces heart disease risk by 35%. Start today.",
+  "😴 7–9 hours of sleep is not a luxury — it is when your immune system repairs itself.",
+  "🥗 Eat the rainbow: different colored vegetables contain different protective compounds.",
+  "🧘 5 minutes of deep breathing reduces cortisol by 23%. Try it before every meal.",
+  "📊 Check your blood pressure at least once a month. Silent hypertension affects 1 in 3 adults.",
+  "🌞 15 minutes of morning sunlight regulates circadian rhythm and boosts vitamin D naturally.",
+  "🧴 Wash hands for 20 seconds — it prevents more illness than most medicines.",
+];
+function loadDailyTip(){const el=document.getElementById('daily-tip');if(el)el.textContent=TIPS[Math.floor(Math.random()*TIPS.length)];}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Dashboard — MEDICURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/dashboards.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<nav>
+  <div class="logo">🏥 MEDICURE <span class="logo-badge">AI</span></div>
+  <div class="user-info">
+    <div class="avatar" style="background:linear-gradient(135deg,#2563eb,#7c3aed);" id="doctor-avatar">D</div>
+    <span id="doctor-name-nav" style="font-weight:600;">Doctor</span>
+    <button class="nav-btn" onclick="window.doLogout()">Logout</button>
+  </div>
+</nav>
+
+<div class="dash-layout">
+  <div class="sidebar">
+    <div class="sidebar-section-label">Dashboard</div>
+    <div class="sidebar-item active" id="dsb-home" onclick="window.showDocSection('dsection-home')"><span class="icon">🏠</span> Home</div>
+    <div class="sidebar-item" id="dsb-dara" onclick="window.showDocSection('dsection-dara')"><span class="icon">🧠</span> DARA Analysis</div>
+    <div class="sidebar-item" id="dsb-nova" onclick="window.showDocSection('dsection-nova')"><span class="icon">🎙️</span> NOVA Notes</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Patients</div>
+    <div class="sidebar-item" id="dsb-patients" onclick="window.showDocSection('dsection-patients')"><span class="icon">👥</span> Patient Cases</div>
+    <div class="sidebar-item" id="dsb-reports" onclick="window.showDocSection('dsection-dreports')"><span class="icon">📊</span> Patient Reports</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Tools</div>
+    <div class="sidebar-item" id="dsb-medicines" onclick="window.showDocSection('dsection-med')"><span class="icon">💊</span> Medicines</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-item" onclick="window.doLogout()"><span class="icon">🚪</span> Logout</div>
+  </div>
+  
+  <div class="dash-content">
+    <!-- DOC HOME -->
+    <div id="dsection-home">
+      <div class="dash-greeting">
+        <h2>Welcome, Dr. <span id="doctor-greeting-name">there</span> 👨‍⚕️</h2>
+        <p>Your AI-powered medical assistant is ready. Let's make today count.</p>
+      </div>
+      <div class="quick-cards">
+        <div class="quick-card" onclick="window.showDocSection('dsection-dara')"><div class="q-icon">🧠</div><div class="q-title">DARA Analysis</div><div class="q-sub">Patient history insights</div></div>
+        <div class="quick-card" onclick="window.showDocSection('dsection-nova')"><div class="q-icon">🎙️</div><div class="q-title">NOVA Notes</div><div class="q-sub">Voice to SOAP auto</div></div>
+        <div class="quick-card" onclick="window.showDocSection('dsection-patients')"><div class="q-icon">👥</div><div class="q-title">Patient Cases</div><div class="q-sub">Review ARIA reports</div></div>
+        <div class="quick-card" onclick="window.showDocSection('dsection-dreports')"><div class="q-icon">📊</div><div class="q-title">Patient Reports</div><div class="q-sub">AI-generated reports</div></div>
+        <div class="quick-card" onclick="window.showDocSection('dsection-med')"><div class="q-icon">💊</div><div class="q-title">Medicine Search</div><div class="q-sub">Drug info & interactions</div></div>
+      </div>
+      <div class="section-card" style="background:linear-gradient(135deg,#e8f8f2,#f0fdf9);border-color:var(--green);">
+        <h3>📈 Today's Stats</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem;margin-top:.5rem;">
+          <div><div style="font-size:1.7rem;font-weight:900;color:var(--green);font-family:'Playfair Display',serif;">2.5h</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Saved today with NOVA</div></div>
+          <div><div style="font-size:1.7rem;font-weight:900;color:#2563eb;font-family:'Playfair Display',serif;" id="doc-cases-count">0</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Patient cases waiting</div></div>
+          <div><div style="font-size:1.7rem;font-weight:900;color:var(--amber);font-family:'Playfair Display',serif;">12</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">SOAP notes generated</div></div>
+          <div><div style="font-size:1.7rem;font-weight:900;color:#7c3aed;font-family:'Playfair Display',serif;">3</div><div style="font-size:.77rem;color:var(--text-muted);margin-top:.2rem;">Bias flags caught</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DARA -->
+    <div id="dsection-dara" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">🧠 DARA — Patient Analysis</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Enter patient details for full history analysis and diagnosis suggestions.</p>
+      <div class="section-card">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div class="form-group"><label>Patient Name</label><input class="form-input" id="dara-name" placeholder="Patient name"></div>
+          <div class="form-group"><label>Age</label><input class="form-input" id="dara-age" type="number" placeholder="Age"></div>
+          <div class="form-group"><label>Gender</label><select class="form-input" id="dara-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div class="form-group"><label>Chief Complaint</label><input class="form-input" id="dara-complaint" placeholder="Main complaint"></div>
+        </div>
+        <div class="form-group"><label>Medical History (Known conditions, medicines)</label><textarea class="form-input" id="dara-history" rows="3" placeholder="e.g. Hypertension since 2020, on Amlodipine 5mg. Diabetes Type 2 since 2019..."></textarea></div>
+        <div class="form-group"><label>Vitals (optional)</label><input class="form-input" id="dara-vitals" placeholder="e.g. BP 140/90, Temp 98.6F, SpO2 97%, Pulse 82"></div>
+        <button class="btn btn-primary" onclick="window.runDARA()" id="dara-btn">🧠 Analyse with DARA</button>
+      </div>
+      <div id="dara-output"></div>
+    </div>
+
+    <!-- NOVA -->
+    <div id="dsection-nova" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">🎙️ NOVA — Voice Documentation</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Speak for 60 seconds after your consultation. NOVA generates a complete SOAP note instantly.</p>
+      <div class="nova-wrap">
+        <div style="text-align:center;">
+          <p style="color:var(--text-muted);font-size:.88rem;" id="nova-status">Press the mic button and speak about your consultation</p>
+          <button class="record-btn" id="record-btn" onclick="window.toggleRecording()">🎙️</button>
+          <p style="font-size:.78rem;color:var(--text-muted);" id="nova-timer"></p>
+        </div>
+        <div style="margin:1rem 0;">
+          <label style="font-size:.81rem;font-weight:700;color:var(--text);display:block;margin-bottom:.5rem;">Or type your consultation notes:</label>
+          <textarea class="form-input" id="nova-text-input" rows="4" placeholder="e.g. Patient is a 35 year old male presenting with fever for 3 days..."></textarea>
+          <button class="btn btn-primary btn-sm" style="margin-top:.7rem;" onclick="window.generateSOAP()">⚡ Generate SOAP Note</button>
+        </div>
+        <div id="soap-output"></div>
+      </div>
+    </div>
+
+    <!-- PATIENTS -->
+    <div id="dsection-patients" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">👥 Patient Cases</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Patients who spoke with ARIA — with full intake reports ready for review.</p>
+      <div id="patient-cases-list"></div>
+    </div>
+
+    <!-- PATIENT REPORTS -->
+    <div id="dsection-dreports" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">📊 Patient Reports — AI Generated</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Generate comprehensive AI reports for any patient. Share with them after review.</p>
+      <div class="section-card">
+        <h3>🤖 Generate Patient Report</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group"><label>Patient Name</label><input class="form-input" id="rpt-name" placeholder="Patient name"></div>
+          <div class="form-group"><label>Age / Gender</label><input class="form-input" id="rpt-age-gender" placeholder="e.g. 45yr, Male"></div>
+        </div>
+        <div class="form-group"><label>Diagnosis / Chief Complaint</label><input class="form-input" id="rpt-diagnosis" placeholder="e.g. Type 2 Diabetes with hypertension"></div>
+        <div class="form-group"><label>Lab Results / Vitals</label><textarea class="form-input" id="rpt-labs" rows="2" placeholder="e.g. HbA1c: 8.2%, FBS: 180mg/dl, BP: 145/90, BMI: 28.5"></textarea></div>
+        <div class="form-group"><label>Current Treatment / Medications</label><textarea class="form-input" id="rpt-treatment" rows="2" placeholder="e.g. Metformin 1g BD, Amlodipine 5mg OD"></textarea></div>
+        <button class="btn btn-primary" onclick="window.generateDoctorReport()" id="drpt-btn">📊 Generate Comprehensive Report</button>
+      </div>
+      <div id="doctor-report-output"></div>
+    </div>
+
+    <!-- DOCTOR MEDICINES -->
+    <div id="dsection-med" style="display:none">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:.3rem;font-weight:900;">💊 Medicine Information</h2>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Clinical drug information with interactions and contraindications.</p>
+      <div class="medicine-search-bar">
+        <input type="text" id="doc-med-input" placeholder="Search medicine..." onkeydown="if(event.key==='Enter')window.searchDocMedicine()">
+        <button onclick="window.searchDocMedicine()">Search 🔍</button>
+      </div>
+      <div id="doc-med-results"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
