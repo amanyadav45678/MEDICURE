@@ -673,7 +673,7 @@ with attribution to the original author.
 
 <div align="center">
 
-**Built with ❤️ and Claude AI**
+
 
 *MEDICURE — Transforming healthcare with AI, one consultation at a time.*
 
